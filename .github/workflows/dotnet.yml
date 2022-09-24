@@ -61,13 +61,13 @@ jobs:
         
     - name: Restore dependencies
       #if: steps.cache-dependencies.outputs.cache-hit != 'true'
-      run: dotnet restore
+      run: dotnet restore SeedWork/SeedWork.sln
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release -p:VersionPrefix=${{ env.GitVersion_MajorMinorPatch }} -p:InformationalVersion=${{ env.GitVersion_InformationalVersion }}
+      run: dotnet build SeedWork/SeedWork.sln --no-restore --configuration Release -p:VersionPrefix=${{ env.GitVersion_MajorMinorPatch }} -p:InformationalVersion=${{ env.GitVersion_InformationalVersion }}
 
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal
+      run: dotnet test SeedWork/SeedWork.sln --no-build --configuration Release --verbosity normal
 
     - name: Pack
       if: contains(env.GitVersion_BranchName, 'master')
