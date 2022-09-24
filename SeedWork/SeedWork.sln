@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{6ED738EF-CA5B-4ABF-ADA1-ECBB43993497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{6ED738EF-CA5B-4ABF-ADA1-ECBB43993497}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "tst\Core.Tests\Core.Tests.csproj", "{EB94FDCB-0113-4840-81E0-978DF3DF98FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "tst\Domain.Tests\Domain.Tests.csproj", "{EB94FDCB-0113-4840-81E0-978DF3DF98FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{2E4DA7B7-4F53-4EF1-A54C-0D633A68518A}"
 	ProjectSection(SolutionItems) = preProject
