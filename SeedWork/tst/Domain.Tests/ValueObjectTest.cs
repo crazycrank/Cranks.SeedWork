@@ -1,4 +1,6 @@
-﻿using Shouldly;
+﻿using Cranks.SeedWork.Domain.Attributes;
+
+using Shouldly;
 
 namespace Cranks.SeedWork.Domain.Tests;
 
@@ -51,8 +53,8 @@ public class ValueObjectTest : UnitTestBase
         result1.ShouldNotBe(result2);
     }
 
+    [ValueObject]
     private record Address(string Street, string ZipCode, string City)
-        : ValueObject<Address>
     {
     }
 }
