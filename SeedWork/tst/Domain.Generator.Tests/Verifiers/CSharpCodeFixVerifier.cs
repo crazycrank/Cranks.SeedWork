@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Cranks.SeedWork.Domain.Attributes;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -11,17 +13,24 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
     where TAnalyzer : DiagnosticAnalyzer, new()
     where TCodeFix : CodeFixProvider, new()
 {
+#pragma warning disable CA1000 // Do not declare static members on generic types
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic()" />
     public static DiagnosticResult Diagnostic()
-        => CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic();
+    {
+        return CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic();
+    }
 
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic(string)" />
     public static DiagnosticResult Diagnostic(string diagnosticId)
-        => CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(diagnosticId);
+    {
+        return CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(diagnosticId);
+    }
 
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic(DiagnosticDescriptor)" />
     public static DiagnosticResult Diagnostic(DiagnosticDescriptor descriptor)
-        => CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(descriptor);
+    {
+        return CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(descriptor);
+    }
 
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyAnalyzerAsync(string, DiagnosticResult[])" />
     public static async Task VerifyAnalyzerAsync(string source, params DiagnosticResult[] expected)
@@ -32,7 +41,9 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
 
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyCodeFixAsync(string, string)" />
     public static async Task VerifyCodeFixAsync(string source, string fixedSource)
-        => await VerifyCodeFixAsync(source, fixedSource, DiagnosticResult.EmptyDiagnosticResults);
+    {
+        await VerifyCodeFixAsync(source, fixedSource, DiagnosticResult.EmptyDiagnosticResults);
+    }
 
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyCodeFixAsync(string, DiagnosticResult[], string)" />
     public static async Task VerifyCodeFixAsync(string source, string fixedSource, params DiagnosticResult[] expected)
@@ -40,6 +51,7 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
         var test = new Test(source, fixedSource, expected);
         await test.RunAsync(CancellationToken.None);
     }
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
     private class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>
     {
@@ -67,12 +79,12 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
                                                           new PackageIdentity("Microsoft.NETCore.App.Ref", "6.0.0"),
                                                           Path.Combine("ref", "net6.0"));
 
-            TestState.AdditionalReferences.Add(typeof(ValueObject).Assembly);
+            TestState.AdditionalReferences.Add(typeof(ValueObjectAttribute).Assembly);
 
             SolutionTransforms.Add((solution, projectId) =>
                                    {
-                                       var compilationOptions = solution.GetProject(projectId)?.CompilationOptions;
-                                       compilationOptions = compilationOptions?.WithSpecificDiagnosticOptions(
+                                       var compilationOptions = solution.GetProject(projectId)!.CompilationOptions;
+                                       compilationOptions = compilationOptions!.WithSpecificDiagnosticOptions(
                                            compilationOptions.SpecificDiagnosticOptions.SetItems(CSharpVerifierHelper.NullableWarnings));
 
                                        solution = solution.WithProjectCompilationOptions(projectId, compilationOptions);

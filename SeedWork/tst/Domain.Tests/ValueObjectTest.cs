@@ -1,4 +1,6 @@
-﻿using Cranks.SeedWork.Domain.Attributes;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using Cranks.SeedWork.Domain.Attributes;
 
 using Shouldly;
 
@@ -54,7 +56,86 @@ public class ValueObjectTest : UnitTestBase
     }
 
     [ValueObject]
-    private record Address(string Street, string ZipCode, string City)
+    private partial record TestInt(int Value);
+
+    private partial record TestInt : ValueObjectUnary<int, TestInt>(Value);
+
+    [ValueObject]
+    private partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
+
+    [ValueObject]
+    private partial record Age(int Value) : ValueObject<Age>,
+                                            IComparable<Age>,
+                                            IComparable
     {
+        // if unitary value object
+        public static implicit operator Age(int age)
+        {
+            return new(age);
+        }
+
+        public static implicit operator int(Age age)
+        {
+            return age.Value;
+        }
+
+        // if value is comparable
+        public static bool operator <(Age? left, Age? right)
+        {
+            return Comparer<Age>.Default.Compare(left, right) < 0;
+        }
+
+        public static bool operator >(Age? left, Age? right)
+        {
+            return Comparer<Age>.Default.Compare(left, right) > 0;
+        }
+
+        public static bool operator <=(Age? left, Age? right)
+        {
+            return Comparer<Age>.Default.Compare(left, right) <= 0;
+        }
+
+        public static bool operator >=(Age? left, Age? right)
+        {
+            return Comparer<Age>.Default.Compare(left, right) >= 0;
+        }
+
+        public int CompareTo(Age? other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return 1;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return 0;
+            }
+
+            return Value.CompareTo(other.Value);
+        }
+
+        public int CompareTo(object? obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return 1;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return 0;
+            }
+
+            return obj is Age other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(Age)}");
+        }
+
+        // if value supports Parse
+        public static bool TryParse([NotNullWhen(true)] string? s, out Age result)
+        {
+            var parsed = int.TryParse(s, out var intResult);
+            result = new Age(intResult);
+            return parsed;
+        }
     }
 }

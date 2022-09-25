@@ -8,3 +8,5 @@ dotnet_diagnostic.CA1707.severity = none
 
 # VSTHRD200: Use "Async" suffix for async methods
 dotnet_diagnostic.VSTHRD200.severity = none
+
+dotnet_diagnostic.VSTHRD111.severity = none
