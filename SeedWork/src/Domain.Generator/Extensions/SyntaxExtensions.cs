@@ -17,6 +17,20 @@ internal static class SyntaxExtensions
                _ => null,
            };
 
+    public static string? ExtractTypeName(this SyntaxNode? node)
+    {
+        return (node as NameSyntax).ExtractTypeName();
+    }
+
+    public static string? ExtractTypeName(this TypeSyntax? node)
+    {
+        return node switch
+               {
+                   PredefinedTypeSyntax pds => pds.Keyword.Text,
+                   _ => null,
+               };
+    }
+
     public static SyntaxNode? GetAttributeNode(this SyntaxNode? node)
         => (node as AttributeSyntax).GetAttributeNode();
 

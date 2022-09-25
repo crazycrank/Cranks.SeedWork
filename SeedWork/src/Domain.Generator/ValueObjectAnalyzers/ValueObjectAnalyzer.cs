@@ -29,15 +29,9 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
                                                                        DiagnosticSeverity.Error,
                                                                        true);
 
-    ////private static readonly DiagnosticDescriptor MustDeriveFromValueObjectRule = new(MustDeriveFromValueObjectDiagnosticId,
-    ////                                                                                 "ValueObject is not partial",
-    ////                                                                                 "The record '{0}' derives from ValueObject, but is not partial. Value objects must be marked as partial.",
-    ////                                                                                 "SeedWork Domain",
-    ////                                                                                 DiagnosticSeverity.Error,
-    ////                                                                                 true);
-
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; } = ImmutableArray.Create(MustBePartialRule,
-                                                                                                               MustBeRecordRule);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
+        = ImmutableArray.Create(MustBePartialRule,
+                                MustBeRecordRule);
 
     public override void Initialize(AnalysisContext context)
     {
