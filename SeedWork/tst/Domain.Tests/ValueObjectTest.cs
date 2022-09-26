@@ -60,7 +60,7 @@ public class ValueObjectTest : UnitTestBase
     }
 
     [Fact]
-    public void GivenIntValueObject_CanBeCastedToInt()
+    public void GivenIntValueObject_CanBeCastToInt()
     {
         // arrange
         var age = new Age(Faker.Random.Int());
@@ -73,7 +73,7 @@ public class ValueObjectTest : UnitTestBase
     }
 
     [Fact]
-    public void GivenInt_CanBeCastedToIntValueObject()
+    public void GivenInt_CanBeCastToIntValueObject()
     {
         // arrange
         var age = Faker.Random.Int();
