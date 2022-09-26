@@ -22,7 +22,7 @@ jobs:
         fetch-depth: 0
         
     - name: Cache .NET
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-dotnet
       with:
         path: ~/runner/.dotnet
@@ -30,12 +30,13 @@ jobs:
         
     - name: Setup .NET
       if: steps.cache-dotnet.outputs.cache-hit != 'true'
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
+        include-prerelease: true
         
     - name: Cache GitVersion
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: cache-gitversion 
       with:
         path: ~/runner/.gitversion
@@ -51,7 +52,7 @@ jobs:
 
     - name: Cache dependencies
       id: cache-dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ~/.nuget/packages
