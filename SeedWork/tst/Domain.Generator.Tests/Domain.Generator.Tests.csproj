@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Domain.Generator\Domain.Generator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\src\Domain.Generator\Domain.Generator.csproj"  />
     <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
 
