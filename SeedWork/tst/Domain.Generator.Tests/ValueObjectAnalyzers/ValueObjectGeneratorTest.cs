@@ -22,11 +22,11 @@ partial record TestValueObject
 {
     // TODO implement unary extensions
 
-    public static implicit operator TestValueObject(int value)
+    public static explicit operator TestValueObject(int value)
     {
         return new(value);
     }
-    public static implicit operator int(TestValueObject value)
+    public static explicit operator int(TestValueObject value)
     {
         return value.Value;
     }
