@@ -69,11 +69,11 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
     private static void GenerateCastOperators(StringBuilder code, string valueObjectName, (TypeSyntax UnaryType, string UnaryName) unaryDetails)
     {
         code.AppendLine(@$"
-    public static implicit operator {valueObjectName}({unaryDetails.UnaryType} value)
+    public static explicit operator {valueObjectName}({unaryDetails.UnaryType} value)
     {{
         return new(value);
     }}
-    public static implicit operator {unaryDetails.UnaryType}({valueObjectName} value)
+    public static explicit operator {unaryDetails.UnaryType}({valueObjectName} value)
     {{
         return value.{unaryDetails.UnaryName};
     }}");
