@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
 
-[Generator]
+[Generator(LanguageNames.CSharp)]
 public class ValueObjectSourceGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
