@@ -32,7 +32,7 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
     // TODO MustHaveAtLeastOneParameter
     // TODO Must not have partial implementations
     // TODO Parameters should be Equatable
-
+    // TODO ValueObjects should not be nested
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
         = ImmutableArray.Create(MustBePartialRule,
                                 MustBeRecordRule);

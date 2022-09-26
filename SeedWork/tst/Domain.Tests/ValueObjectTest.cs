@@ -4,6 +4,12 @@ using Shouldly;
 
 namespace Cranks.SeedWork.Domain.Tests;
 
+[ValueObject]
+public partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
+
+[ValueObject]
+public partial record Age(int Value);
+
 public class ValueObjectTest : UnitTestBase
 {
     [Fact]
@@ -53,8 +59,31 @@ public class ValueObjectTest : UnitTestBase
         result1.ShouldNotBe(result2);
     }
 
-    [ValueObject]
-    private partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
+    ////[Fact]
+    ////public void GivenIntValueObject_CanBeCastedToInt()
+    ////{
+    ////    // arrange
+    ////    var age = new Age(Faker.Random.Int());
+
+    ////    // act
+    ////    var result = (int)age;
+
+    ////    // assert
+    ////    result.ShouldBe(age.Value);
+    ////}
+
+    ////[Fact]
+    ////public void GivenInt_CanBeCastedToIntValueObject()
+    ////{
+    ////    // arrange
+    ////    var age = Faker.Random.Int();
+
+    ////    // act
+    ////    var result = (Age)age;
+
+    ////    // assert
+    ////    result.Value.ShouldBe(age);
+    ////}
 
     ////[ValueObject]
     ////private partial record Age(int Value) : ValueObject<Age>,

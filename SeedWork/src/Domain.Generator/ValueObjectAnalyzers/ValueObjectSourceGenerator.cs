@@ -98,7 +98,8 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
                                            BaseType:
                                            {
                                                Name: "ValueObject",
-                                               ContainingNamespace.Name: "Cranks.SeedWork.Domain",
+                                               ContainingAssembly.Name: "Cranks.SeedWork.Domain",
+                                               ContainingNamespace.Name: "Domain",
                                            },
                                        };
     }
@@ -109,6 +110,6 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
                      ? string.Empty
                      : $"{context.TargetSymbol.ContainingNamespace.Name}.";
 
-        return $"{ns}{context.TargetSymbol.MetadataName}.g.cs";
+        return $"{context.TargetSymbol.ContainingNamespace.ContainingAssembly.Name}.{ns}{context.TargetSymbol.MetadataName}.g.cs";
     }
 }
