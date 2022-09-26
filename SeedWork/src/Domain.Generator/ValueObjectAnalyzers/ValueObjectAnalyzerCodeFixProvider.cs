@@ -20,7 +20,7 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
     public sealed override FixAllProvider GetFixAllProvider()
         => WellKnownFixAllProviders.BatchFixer;
 
-    public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
+    public sealed override Task RegisterCodeFixesAsync(CodeFixContext context)
     {
         foreach (var diagnostic in context.Diagnostics)
         {
@@ -47,14 +47,14 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
             }
         }
 
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     private static async Task<Document> MakePartialAsync(CodeFixContext context,
                                                          Diagnostic diagnostic,
                                                          CancellationToken cancellationToken)
     {
-        var root = await context.Document.GetSyntaxRootAsync(cancellationToken);
+        var root = await context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
         if (root is null)
         {
@@ -73,7 +73,7 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
                                                         Diagnostic diagnostic,
                                                         CancellationToken cancellationToken)
     {
-        var root = await context.Document.GetSyntaxRootAsync(cancellationToken);
+        var root = await context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
         if (root is null)
         {

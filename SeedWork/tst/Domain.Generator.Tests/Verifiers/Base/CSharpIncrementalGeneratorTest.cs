@@ -13,12 +13,14 @@ public class CSharpIncrementalGeneratorTest<TSourceGenerator, TVerifier> : Sourc
     where TSourceGenerator : IIncrementalGenerator, new()
     where TVerifier : IVerifier, new()
 {
-    protected override IEnumerable<ISourceGenerator> GetSourceGenerators()
-        => new[] { new TSourceGenerator().AsSourceGenerator() };
+    public override string Language => LanguageNames.CSharp;
 
     protected override string DefaultFileExt => "cs";
 
-    public override string Language => LanguageNames.CSharp;
+    protected override IEnumerable<ISourceGenerator> GetSourceGenerators()
+    {
+        return new[] { new TSourceGenerator().AsSourceGenerator() };
+    }
 
     protected override GeneratorDriver CreateGeneratorDriver(Project project, ImmutableArray<ISourceGenerator> sourceGenerators)
     {
@@ -30,8 +32,12 @@ public class CSharpIncrementalGeneratorTest<TSourceGenerator, TVerifier> : Sourc
     }
 
     protected override CompilationOptions CreateCompilationOptions()
-        => new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
+    {
+        return new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true);
+    }
 
     protected override ParseOptions CreateParseOptions()
-        => new CSharpParseOptions(LanguageVersion.Default, DocumentationMode.Diagnose);
+    {
+        return new CSharpParseOptions(LanguageVersion.Default, DocumentationMode.Diagnose);
+    }
 }

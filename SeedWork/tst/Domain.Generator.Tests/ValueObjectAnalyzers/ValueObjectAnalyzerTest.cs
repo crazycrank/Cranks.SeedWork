@@ -16,7 +16,6 @@ public class ValueObjectAnalyzerTest
         await Verify.VerifyAnalyzerAsync(test);
     }
 
-    //Diagnostic and CodeFix both triggered and checked for
     [Fact]
     public async Task ValidCode_NoDiagnostics()
     {
