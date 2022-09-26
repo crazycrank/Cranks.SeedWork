@@ -29,6 +29,10 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
                                                                        DiagnosticSeverity.Error,
                                                                        true);
 
+    // TODO MustHaveAtLeastOneParameter
+    // TODO Must not have partial implementations
+    // TODO Parameters should be Equatable
+
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get; }
         = ImmutableArray.Create(MustBePartialRule,
                                 MustBeRecordRule);
