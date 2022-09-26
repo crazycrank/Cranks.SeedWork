@@ -13,12 +13,14 @@ namespace Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
 [Shared]
 public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
 {
-    public sealed override ImmutableArray<string> FixableDiagnosticIds { get; }
-        = ImmutableArray.Create(ValueObjectAnalyzer.MustBePartialDiagnosticId,
-                                ValueObjectAnalyzer.MustBeRecordDiagnosticId);
+    public sealed override ImmutableArray<string> FixableDiagnosticIds
+        => ImmutableArray.Create(ValueObjectAnalyzer.MustBePartialDiagnosticId,
+                                 ValueObjectAnalyzer.MustBeRecordDiagnosticId);
 
     public sealed override FixAllProvider GetFixAllProvider()
-        => WellKnownFixAllProviders.BatchFixer;
+    {
+        return WellKnownFixAllProviders.BatchFixer;
+    }
 
     public sealed override Task RegisterCodeFixesAsync(CodeFixContext context)
     {

@@ -59,31 +59,31 @@ public class ValueObjectTest : UnitTestBase
         result1.ShouldNotBe(result2);
     }
 
-    [Fact]
-    public void GivenIntValueObject_CanBeCastToInt()
-    {
-        // arrange
-        var age = new Age(Faker.Random.Int());
+    ////[Fact]
+    ////public void GivenIntValueObject_CanBeCastToInt()
+    ////{
+    ////    // arrange
+    ////    var age = new Age(Faker.Random.Int());
 
-        // act
-        var result = (int)age;
+    ////    // act
+    ////    var result = (int)age;
 
-        // assert
-        result.ShouldBe(age.Value);
-    }
+    ////    // assert
+    ////    result.ShouldBe(age.Value);
+    ////}
 
-    [Fact]
-    public void GivenInt_CanBeCastToIntValueObject()
-    {
-        // arrange
-        var age = Faker.Random.Int();
+    ////[Fact]
+    ////public void GivenInt_CanBeCastToIntValueObject()
+    ////{
+    ////    // arrange
+    ////    var age = Faker.Random.Int();
 
-        // act
-        var result = (Age)age;
+    ////    // act
+    ////    var result = (Age)age;
 
-        // assert
-        result.Value.ShouldBe(age);
-    }
+    ////    // assert
+    ////    result.Value.ShouldBe(age);
+    ////}
 
     ////[ValueObject]
     ////private partial record Age(int Value) : ValueObject<Age>,
