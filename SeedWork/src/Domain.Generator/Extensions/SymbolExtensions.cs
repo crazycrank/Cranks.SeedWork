@@ -14,4 +14,9 @@ internal static class SymbolExtensions
                                  ContainingNamespace.Name: "Attributes",
                              });
     }
+
+    public static string GetFullName(this ITypeSymbol type)
+    {
+        return $"{type.ContainingNamespace.Name}.{type.Name}";
+    }
 }
