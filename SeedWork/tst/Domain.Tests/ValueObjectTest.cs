@@ -5,7 +5,7 @@ using Shouldly;
 namespace Cranks.SeedWork.Domain.Tests;
 
 [ValueObject]
-public partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
+public partial record Address(string Street, string ZipCode, string City);
 
 [ValueObject]
 public partial record Age(int Value);
@@ -59,47 +59,47 @@ public class ValueObjectTest : UnitTestBase
         result1.ShouldNotBe(result2);
     }
 
-    ////[Fact]
-    ////public void GivenIntValueObject_CanBeCastToInt()
-    ////{
-    ////    // arrange
-    ////    var age = new Age(Faker.Random.Int());
+    [Fact]
+    public void GivenIntValueObject_CanBeCastToInt()
+    {
+        // arrange
+        var age = new Age(Faker.Random.Int());
 
-    ////    // act
-    ////    var result = (int)age;
+        // act
+        var result = (int)age;
 
-    ////    // assert
-    ////    result.ShouldBe(age.Value);
-    ////}
+        // assert
+        result.ShouldBe(age.Value);
+    }
 
-    ////[Fact]
-    ////public void GivenInt_CanBeCastToIntValueObject()
-    ////{
-    ////    // arrange
-    ////    var age = Faker.Random.Int();
+    [Fact]
+    public void GivenInt_CanBeCastToIntValueObject()
+    {
+        // arrange
+        var age = Faker.Random.Int();
 
-    ////    // act
-    ////    var result = (Age)age;
+        // act
+        var result = (Age)age;
 
-    ////    // assert
-    ////    result.Value.ShouldBe(age);
-    ////}
+        // assert
+        result.Value.ShouldBe(age);
+    }
+
+    [Fact]
+    public void GivenValueObject_IsSubtypeOfValueObject()
+    {
+        // arrange
+        var age = new Age(Faker.Random.Int());
+
+        // assert
+        age.ShouldBeAssignableTo<ValueObject<Age>>();
+    }
 
     ////[ValueObject]
     ////private partial record Age(int Value) : ValueObject<Age>,
     ////                                        IComparable<Age>,
     ////                                        IComparable
     ////{
-    ////    // if unitary value object
-    ////    public static implicit operator Age(int age)
-    ////    {
-    ////        return new Age(age);
-    ////    }
-
-    ////    public static implicit operator int(Age age)
-    ////    {
-    ////        return age.Value;
-    ////    }
 
     ////    // if value is comparable
     ////    public static bool operator <(Age? left, Age? right)
