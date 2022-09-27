@@ -95,69 +95,24 @@ public class ValueObjectTest : UnitTestBase
         age.ShouldBeAssignableTo<ValueObject<Age>>();
     }
 
-    ////[ValueObject]
-    ////private partial record Age(int Value) : ValueObject<Age>,
-    ////                                        IComparable<Age>,
-    ////                                        IComparable
-    ////{
+    [Fact]
+    public void GivenUnaryValueObjectWithComparableValue_ValueObjectShouldBeComparable()
+    {
+        var age1 = new Age(1);
+        var age2 = new Age(2);
 
-    ////    // if value is comparable
-    ////    public static bool operator <(Age? left, Age? right)
-    ////    {
-    ////        return Comparer<Age>.Default.Compare(left, right) < 0;
-    ////    }
+        age1.ShouldBeLessThan(age2);
+        age1.ShouldBeLessThanOrEqualTo(age2);
+        (age1 < age2).ShouldBeTrue();
+        (age1 <= age2).ShouldBeTrue();
+        (age1 > age2).ShouldBeFalse();
+        (age1 >= age2).ShouldBeFalse();
 
-    ////    public static bool operator >(Age? left, Age? right)
-    ////    {
-    ////        return Comparer<Age>.Default.Compare(left, right) > 0;
-    ////    }
-
-    ////    public static bool operator <=(Age? left, Age? right)
-    ////    {
-    ////        return Comparer<Age>.Default.Compare(left, right) <= 0;
-    ////    }
-
-    ////    public static bool operator >=(Age? left, Age? right)
-    ////    {
-    ////        return Comparer<Age>.Default.Compare(left, right) >= 0;
-    ////    }
-
-    ////    public int CompareTo(Age? other)
-    ////    {
-    ////        if (ReferenceEquals(null, other))
-    ////        {
-    ////            return 1;
-    ////        }
-
-    ////        if (ReferenceEquals(this, other))
-    ////        {
-    ////            return 0;
-    ////        }
-
-    ////        return Value.CompareTo(other.Value);
-    ////    }
-
-    ////    public int CompareTo(object? obj)
-    ////    {
-    ////        if (ReferenceEquals(null, obj))
-    ////        {
-    ////            return 1;
-    ////        }
-
-    ////        if (ReferenceEquals(this, obj))
-    ////        {
-    ////            return 0;
-    ////        }
-
-    ////        return obj is Age other ? CompareTo(other) : throw new ArgumentException($"Object must be of type {nameof(Age)}");
-    ////    }
-
-    ////    // if value supports Parse
-    ////    public static bool TryParse([NotNullWhen(true)] string? s, out Age result)
-    ////    {
-    ////        var parsed = int.TryParse(s, out var intResult);
-    ////        result = new Age(intResult);
-    ////        return parsed;
-    ////    }
-    ////}
+        age2.ShouldBeGreaterThan(age1);
+        age2.ShouldBeGreaterThanOrEqualTo(age1);
+        (age2 < age1).ShouldBeFalse();
+        (age2 <= age1).ShouldBeFalse();
+        (age2 > age1).ShouldBeTrue();
+        (age2 >= age1).ShouldBeTrue();
+    }
 }
