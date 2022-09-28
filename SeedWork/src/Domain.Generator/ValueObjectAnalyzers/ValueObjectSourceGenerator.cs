@@ -194,7 +194,7 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
             return 0;
         }}
 
-        return {details.Parameters.Single().Name}.CompareTo(other.{details.Parameters.Single().Type});
+        return {details.Parameters.Single().Name}.CompareTo(other.{details.Parameters.Single().Name});
     }}
 
     public int CompareTo(object? obj)

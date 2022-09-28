@@ -12,7 +12,7 @@ public class ValueObjectGeneratorTest
 using Cranks.SeedWork.Domain;
 using Cranks.SeedWork.Domain.Attributes;
 
-namespace SomeNamespace
+namespace SomeNamespace;
 
 [ValueObject]
 public partial record TestValueObject(int Value) : ValueObject<TestValueObject>;
@@ -43,8 +43,8 @@ partial record TestValueObject
 namespace SomeNamespace;
 
 partial record TestValueObject
-    : System.IComparable,
-      System.IComparable<TestValueObject>
+    : System.IComparable<TestValueObject>,
+      System.IComparable
 {
     public static bool operator <(TestValueObject? left, TestValueObject? right)
     {

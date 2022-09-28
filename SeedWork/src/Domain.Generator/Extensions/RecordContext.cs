@@ -17,8 +17,8 @@ internal class RecordContext : IDisposable
         {
             var type = baseTypes[i];
             _code.Append(i == 0
-                             ? $"    : {type.ContainingNamespace}.{type.Name}"
-                             : $"      {type.ContainingNamespace}.{type.Name}");
+                             ? $"    : {type.GetFullName()}"
+                             : $"      {type.GetFullName()}");
 
             if (i != baseTypes.Length - 1)
             {
