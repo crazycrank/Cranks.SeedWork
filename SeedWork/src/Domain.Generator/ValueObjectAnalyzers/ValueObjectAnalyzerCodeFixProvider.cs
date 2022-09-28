@@ -14,8 +14,8 @@ namespace Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
 public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
 {
     public sealed override ImmutableArray<string> FixableDiagnosticIds
-        => ImmutableArray.Create(ValueObjectAnalyzer.MustBePartialDiagnosticId,
-                                 ValueObjectAnalyzer.MustBeRecordDiagnosticId);
+        => ImmutableArray.Create(ValueObjectAnalyzer.MustBePartialId,
+                                 ValueObjectAnalyzer.MustBeRecordId);
 
     public sealed override FixAllProvider GetFixAllProvider()
     {
@@ -26,9 +26,9 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
     {
         foreach (var diagnostic in context.Diagnostics)
         {
-            if (diagnostic.Id == ValueObjectAnalyzer.MustBePartialDiagnosticId)
+            if (diagnostic.Id == ValueObjectAnalyzer.MustBePartialId)
             {
-                var title = ValueObjectAnalyzer.MustBePartialRule.Title.ToString();
+                var title = ValueObjectAnalyzer.MustBePartial.Title.ToString();
 
                 var action = CodeAction.Create(title,
                                                token => MakePartialAsync(context, diagnostic, token),
@@ -37,9 +37,9 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
                 context.RegisterCodeFix(action, diagnostic);
             }
 
-            if (diagnostic.Id == ValueObjectAnalyzer.MustBeRecordDiagnosticId)
+            if (diagnostic.Id == ValueObjectAnalyzer.MustBeRecordId)
             {
-                var title = ValueObjectAnalyzer.MustBeRecordRule.Title.ToString();
+                var title = ValueObjectAnalyzer.MustBeRecord.Title.ToString();
 
                 var action = CodeAction.Create(title,
                                                token => MakeRecordAsync(context, diagnostic, token),
@@ -98,6 +98,28 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
                                                      cds.SemicolonToken);
 
         var newRoot = root.ReplaceNode(cds, newRds);
+        var newDocument = context.Document.WithSyntaxRoot(newRoot);
+
+        return newDocument;
+    }
+
+    private static async Task<Document> DeriveFromValueObjectAsync(CodeFixContext context,
+                                                                   Diagnostic diagnostic,
+                                                                   CancellationToken cancellationToken)
+    {
+        var root = await context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+
+        if (root is null)
+        {
+            return context.Document;
+        }
+
+        var rds = FindTypeDeclaration(diagnostic, root);
+
+        // TODO replace nodes
+        var newRds = rds.WithBaseList(rds.BaseList);
+
+        var newRoot = root.ReplaceNode(rds, newRds);
         var newDocument = context.Document.WithSyntaxRoot(newRoot);
 
         return newDocument;

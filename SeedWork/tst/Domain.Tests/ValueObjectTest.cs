@@ -1,6 +1,4 @@
-﻿using Cranks.SeedWork.Domain.Attributes;
-
-using Shouldly;
+﻿using Shouldly;
 
 namespace Cranks.SeedWork.Domain.Tests;
 

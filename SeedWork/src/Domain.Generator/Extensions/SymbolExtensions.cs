@@ -7,12 +7,8 @@ internal static class SymbolExtensions
     public static bool IsValueObject(this ISymbol type)
     {
         return type.GetAttributes()
-                   .Any(a => a.AttributeClass is
-                             {
-                                 Name: Classes.ValueObjectAttribute,
-                                 ContainingAssembly.Name: Assemblies.Domain,
-                                 ContainingNamespace.Name: "Attributes",
-                             });
+                   .Any(a => a.AttributeClass?.Name == Classes.ValueObjectAttribute
+                             && a.AttributeClass.ContainingNamespace.ToString() == Assemblies.Domain);
     }
 
     public static string GetFullName(this ITypeSymbol type)
@@ -23,6 +19,6 @@ internal static class SymbolExtensions
                            ITypeSymbol => type.Name,
                        };
 
-        return $"{type.ContainingNamespace.Name}.{typeName}";
+        return $"{type.ContainingNamespace}.{typeName}";
     }
 }
