@@ -127,3 +127,6 @@ dotnet_diagnostic.SA1116.severity = none
 dotnet_diagnostic.CA1305.severity = none
 
 dotnet_diagnostic.VSTHRD111.severity = warning
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SX1309S.severity = warning
+dotnet_diagnostic.SX1309.severity = warning

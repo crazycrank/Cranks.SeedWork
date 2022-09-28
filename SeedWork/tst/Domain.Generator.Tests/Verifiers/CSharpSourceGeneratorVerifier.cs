@@ -16,9 +16,9 @@ public static class CSharpSourceGeneratorVerifier<TSourceGenerator>
 {
 #pragma warning disable CA1000 // Do not declare static members on generic types
 
-    public static async Task VerifyGeneratorAsync(string source, string generated, string fileName)
+    public static async Task VerifyGeneratorAsync(string source, params (string Filename, string Source)[] generated)
     {
-        var test = new Test(source, generated, fileName);
+        var test = new Test(source, generated);
 
         await test.RunAsync(CancellationToken.None);
     }
@@ -27,12 +27,11 @@ public static class CSharpSourceGeneratorVerifier<TSourceGenerator>
 
     private class Test : CSharpIncrementalGeneratorTest<TSourceGenerator, XUnitVerifier>
     {
-        public Test(string source, string generated, string fileName)
+        public Test(string source, params (string Filename, string Source)[] generated)
         {
             TestState.Sources.Add(source);
-            TestState.GeneratedSources.Add((typeof(TSourceGenerator),
-                                            fileName,
-                                            SourceText.From(generated, Encoding.UTF8)));
+
+            TestState.GeneratedSources.AddRange(generated.Select(g => (g.Filename, SourceText.From(g.Source, Encoding.UTF8))));
 
             ReferenceAssemblies = new ReferenceAssemblies("net6.0",
                                                           new PackageIdentity("Microsoft.NETCore.App.Ref", "6.0.0"),
