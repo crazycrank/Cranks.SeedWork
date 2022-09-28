@@ -31,7 +31,12 @@ public static class CSharpSourceGeneratorVerifier<TSourceGenerator>
         {
             TestState.Sources.Add(source);
 
-            TestState.GeneratedSources.AddRange(generated.Select(g => (g.Filename, SourceText.From(g.Source, Encoding.UTF8))));
+            foreach (var (filename, generatedSource) in generated)
+            {
+                TestState.GeneratedSources.Add((typeof(TSourceGenerator),
+                                                filename,
+                                                SourceText.From(generatedSource, Encoding.UTF8)));
+            }
 
             ReferenceAssemblies = new ReferenceAssemblies("net6.0",
                                                           new PackageIdentity("Microsoft.NETCore.App.Ref", "6.0.0"),
