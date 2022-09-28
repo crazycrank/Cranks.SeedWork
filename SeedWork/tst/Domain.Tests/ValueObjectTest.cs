@@ -5,10 +5,10 @@ using Shouldly;
 namespace Cranks.SeedWork.Domain.Tests;
 
 [ValueObject]
-public partial record Address(string Street, string ZipCode, string City);
+public partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
 
 [ValueObject]
-public partial record Age(int Value);
+public partial record Age(int Value) : ValueObject<Age>;
 
 public class ValueObjectTest : UnitTestBase
 {
