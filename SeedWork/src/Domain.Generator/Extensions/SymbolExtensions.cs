@@ -17,6 +17,12 @@ internal static class SymbolExtensions
 
     public static string GetFullName(this ITypeSymbol type)
     {
-        return $"{type.ContainingNamespace.Name}.{type.Name}";
+        var typeName = type switch
+                       {
+                           INamedTypeSymbol { IsGenericType: true } ntp => $"{ntp.Name}<{string.Join("', ", ntp.TypeArguments.Select(p => p.Name))}>",
+                           ITypeSymbol => type.Name,
+                       };
+
+        return $"{type.ContainingNamespace.Name}.{typeName}";
     }
 }
