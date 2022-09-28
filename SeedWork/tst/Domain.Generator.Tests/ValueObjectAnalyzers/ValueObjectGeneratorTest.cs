@@ -10,7 +10,7 @@ public class ValueObjectGeneratorTest
     {
         var source = @"
 using Cranks.SeedWork.Domain;
-using Cranks.SeedWork.Domain.Attributes;
+using Cranks.SeedWork.Domain;
 
 namespace SomeNamespace;
 
@@ -108,7 +108,7 @@ partial record TestValueObject
     {
         var source = @"
 using Cranks.SeedWork.Domain;
-using Cranks.SeedWork.Domain.Attributes;
+using Cranks.SeedWork.Domain;
 
 
 [ValueObject]

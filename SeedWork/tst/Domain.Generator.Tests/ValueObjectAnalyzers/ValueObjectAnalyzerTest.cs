@@ -20,10 +20,10 @@ public class ValueObjectAnalyzerTest
     public async Task ValidCode_NoDiagnostics()
     {
         var test = @"
-    using Cranks.SeedWork.Domain.Attributes;
+    using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial record TestValueObject;
+    public partial record TestValueObject(int Value) : ValueObject<TestValueObject>;
 ";
 
         await Verify.VerifyAnalyzerAsync(test);
@@ -33,20 +33,20 @@ public class ValueObjectAnalyzerTest
     public async Task NotPartial_CodeFixWorks()
     {
         var testCode = @"
-    using Cranks.SeedWork.Domain.Attributes;
+    using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public record {|#0:TestValueObject|};
+    public record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
 ";
 
         var testCodeExpected = @"
-    using Cranks.SeedWork.Domain.Attributes;
+    using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial record {|#0:TestValueObject|};
+    public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBePartialDiagnosticId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBePartialId).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 
@@ -54,58 +54,95 @@ public class ValueObjectAnalyzerTest
     public async Task NotARecord_CodeFixWorks()
     {
         var testCode = @"
-    using Cranks.SeedWork.Domain.Attributes;
+    using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial class {|#0:TestValueObject|}
+    public partial class {|#0:TestValueObject|}(int Value)
     {
     }
 ";
 
         var testCodeExpected = @"
-    using Cranks.SeedWork.Domain.Attributes;
+    using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial record {|#0:TestValueObject|}
+    public partial record {|#0:TestValueObject|}(int Value)
     {
     }
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBeRecordDiagnosticId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBeRecordId).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 
-////    //Diagnostic and CodeFix both triggered and checked for
-////    [Fact]
-////    public async Task InvalidCode_GetsFixed()
-////    {
-////        var test = @"
-////    using System;
-////    using System.Collections.Generic;
-////    using System.Linq;
-////    using System.Text;
-////    using System.Threading.Tasks;
-////    using System.Diagnostics;
-////    using Cranks.SeedWork.Domain;
+    [Fact]
+    public async Task NoBaseClass_CodeFixWorks()
+    {
+        var testCode = @"
+    using Cranks.SeedWork.Domain;
 
-////    [ValueObject]
-////    public record |#0:TestRecord|;
-////";
+    [ValueObject]
+    public partial record {|#0:TestValueObject|}(int Value);
+";
 
-////        var fixtest = @"
-////    using System;
-////    using System.Collections.Generic;
-////    using System.Linq;
-////    using System.Text;
-////    using System.Threading.Tasks;
-////    using System.Diagnostics;
-////    using Cranks.SeedWork.Domain;
+        var testCodeExpected = @"
+    using Cranks.SeedWork.Domain;
 
-////    [ValueObject]
-////    public partial record TestRecord;
-////";
+    [ValueObject]
+    public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
+";
 
-////        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBePartialDiagnosticId).WithLocation(0).WithArguments("TypeName");
-////        await Verify.VerifyCodeFixAsync(test, expected, fixtest);
-////    }
+        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustDeriveFromValueObjectId).WithLocation(0).WithArguments("TestValueObject");
+        await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
+    }
+
+    [Fact]
+    public async Task WrongBaseClass_CodeFixWorks()
+    {
+        var testCode = @"
+    using Cranks.SeedWork.Domain;
+
+    public class BaseClass {}
+
+    [ValueObject]
+    public partial record {|#0:TestValueObject|}(int Value) : BaseClass;
+";
+
+        var testCodeExpected = @"
+    using Cranks.SeedWork.Domain;
+
+    public class BaseClass {}
+
+    [ValueObject]
+    public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
+";
+
+        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustDeriveFromValueObjectId).WithLocation(0).WithArguments("TestValueObject");
+        await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
+    }
+
+    [Fact]
+    public async Task BaseInterface_CodeFixWorks()
+    {
+        var testCode = @"
+    using Cranks.SeedWork.Domain;
+
+    public interface IInterface {}
+
+    [ValueObject]
+    public partial record {|#0:TestValueObject|}(int Value) : IInterface;
+";
+
+        var testCodeExpected = @"
+    using Cranks.SeedWork.Domain;
+
+    public interface IInterface {}
+
+    [ValueObject]
+    public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>, IInterface;
+";
+
+        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustDeriveFromValueObjectId).WithLocation(0).WithArguments("TestValueObject");
+        await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
+    }
 }
