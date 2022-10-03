@@ -1,6 +1,8 @@
 ﻿using System.Collections.Immutable;
 using System.Composition;
 
+using Cranks.SeedWork.Domain.Generator.Analyzers;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -14,8 +16,8 @@ namespace Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
 public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
 {
     public sealed override ImmutableArray<string> FixableDiagnosticIds
-        => ImmutableArray.Create(ValueObjectAnalyzer.MustBePartialId,
-                                 ValueObjectAnalyzer.MustBeRecordId);
+        => ImmutableArray.Create(Rules.ValueObject_MustBePartial.Id,
+                                 Rules.ValueObject_MustBeRecord.Id);
 
     public sealed override FixAllProvider GetFixAllProvider()
     {
@@ -26,9 +28,9 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
     {
         foreach (var diagnostic in context.Diagnostics)
         {
-            if (diagnostic.Id == ValueObjectAnalyzer.MustBePartialId)
+            if (diagnostic.Id == Rules.ValueObject_MustBePartial.Id)
             {
-                var title = ValueObjectAnalyzer.MustBePartial.Title.ToString();
+                var title = Rules.ValueObject_MustBePartial.Title.ToString();
 
                 var action = CodeAction.Create(title,
                                                token => MakePartialAsync(context, diagnostic, token),
@@ -37,9 +39,9 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
                 context.RegisterCodeFix(action, diagnostic);
             }
 
-            if (diagnostic.Id == ValueObjectAnalyzer.MustBeRecordId)
+            if (diagnostic.Id == Rules.ValueObject_MustBePartial.Id)
             {
-                var title = ValueObjectAnalyzer.MustBeRecord.Title.ToString();
+                var title = Rules.ValueObject_MustBePartial.Title.ToString();
 
                 var action = CodeAction.Create(title,
                                                token => MakeRecordAsync(context, diagnostic, token),

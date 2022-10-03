@@ -6,7 +6,7 @@ using Cranks.SeedWork.Domain.Generator.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
+namespace Cranks.SeedWork.Domain.Generator.Generators;
 
 [Generator(LanguageNames.CSharp)]
 public class ValueObjectSourceGenerator : IIncrementalGenerator
@@ -14,7 +14,7 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var valueObjects = context.SyntaxProvider
-                                  .ForAttributeWithMetadataName($"{Namespaces.DomainAttributesNamespace}.{Classes.ValueObjectAttribute}",
+                                  .ForAttributeWithMetadataName("Cranks.SeedWork.Domain.ValueObjectAttribute",
                                                                 (n, _) => n is RecordDeclarationSyntax rds && rds.IsPartial(),
                                                                 GetValueObjectDetails)
                                   .Where(details => details is not null);
