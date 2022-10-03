@@ -7,11 +7,11 @@ using Microsoft.CodeAnalysis.Testing.Verifiers;
 
 namespace Cranks.SeedWork.Domain.Generator.Tests.Verifiers;
 
+#pragma warning disable CA1000 // Do not declare static members on generic types
 public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
     where TAnalyzer : DiagnosticAnalyzer, new()
     where TCodeFix : CodeFixProvider, new()
 {
-#pragma warning disable CA1000 // Do not declare static members on generic types
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic()" />
     public static DiagnosticResult Diagnostic()
     {
@@ -24,7 +24,7 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
         return CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(diagnosticId);
     }
 
-    /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.Diagnostic(DiagnosticDescriptor)" />
+    /// <inheritdoc cref="Microsoft.CodeAnalysis.Diagnostic" />
     public static DiagnosticResult Diagnostic(DiagnosticDescriptor descriptor)
     {
         return CSharpCodeFixVerifier<TAnalyzer, TCodeFix, XUnitVerifier>.Diagnostic(descriptor);
@@ -44,12 +44,28 @@ public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>
     }
 
     /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyCodeFixAsync(string, DiagnosticResult[], string)" />
-    public static async Task VerifyCodeFixAsync(string source, string fixedSource, params DiagnosticResult[] expected)
+    public static async Task VerifyCodeFixAsync(string source,
+                                                string fixedSource,
+                                                string residualDiagnostic,
+                                                params DiagnosticResult[] expected)
     {
-        var test = new Test(source, fixedSource, expected);
+        var test = new Test(source, fixedSource, expected)
+                   {
+                       DisabledDiagnostics = { residualDiagnostic },
+                   };
+
         await test.RunAsync(CancellationToken.None);
     }
-#pragma warning restore CA1000 // Do not declare static members on generic types
+
+    /// <inheritdoc cref="CodeFixVerifier{TAnalyzer, TCodeFix, TTest, TVerifier}.VerifyCodeFixAsync(string, DiagnosticResult[], string)" />
+    public static async Task VerifyCodeFixAsync(string source,
+                                                string fixedSource,
+                                                params DiagnosticResult[] expected)
+    {
+        var test = new Test(source, fixedSource, expected);
+
+        await test.RunAsync(CancellationToken.None);
+    }
 
     private class Test : CSharpCodeFixTest<TAnalyzer, TCodeFix, XUnitVerifier>
     {

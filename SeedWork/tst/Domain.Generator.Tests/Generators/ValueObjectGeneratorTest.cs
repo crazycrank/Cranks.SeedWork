@@ -1,7 +1,7 @@
 ﻿using Verify = Cranks.SeedWork.Domain.Generator.Tests.Verifiers.CSharpSourceGeneratorVerifier<
     Cranks.SeedWork.Domain.Generator.Generators.ValueObjectSourceGenerator>;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.ValueObjectAnalyzers;
+namespace Cranks.SeedWork.Domain.Generator.Tests.Generators;
 
 public class ValueObjectGeneratorTest
 {
