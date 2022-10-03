@@ -71,4 +71,12 @@ internal static class Rules
               Categories.Domain,
               DiagnosticSeverity.Error,
               true);
+
+    public static readonly DiagnosticDescriptor ValueObject_MustNotDeriveFromNonGenericValueObject
+        = new("SEED0010",
+              "Do not derive from non-generic ValueObject",
+              "The value object '{0}' derives from the non-generic ValueObject base class, which is non intended to be derived from directly",
+              Categories.Domain,
+              DiagnosticSeverity.Error,
+              true);
 }
