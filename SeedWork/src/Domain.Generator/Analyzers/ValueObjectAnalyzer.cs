@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics;
 
 using Cranks.SeedWork.Domain.Generator.Extensions;
 
@@ -21,6 +22,13 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
 
     public override void Initialize(AnalysisContext context)
     {
+#if DEBUG
+        if (!Debugger.IsAttached)
+        { // uncomment to debug during dotnet build
+////#warning DO NOT CHECKIN
+////            Debugger.Launch();
+        }
+#endif
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
         context.EnableConcurrentExecution();
         context.RegisterSymbolAction(Analyze, SymbolKind.NamedType);
@@ -51,16 +59,19 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
             return;
         }
 
-        // there should not be any partial implementation, as this interferes with other rules and code gen
-        if (type.DeclaringSyntaxReferences.Length != 1)
-        {
-            var diagnostic = Diagnostic.Create(Rules.ValueObject_MustNotHavePartialImplementation,
-                                               tds.Identifier.GetLocation(),
-                                               type.Name);
+        // TODO this should in theory provide if the syntax tree is auto generated, but always returns Unknown
+        ////context.Compilation.Options.SyntaxTreeOptionsProvider.IsGenerated(type.DeclaringSyntaxReferences[1].GetSyntax().SyntaxTree, context.CancellationToken);
 
-            context.ReportDiagnostic(diagnostic);
-            return;
-        }
+        // there should not be any partial implementation, as this interferes with other rules and code gen
+        ////if (type.DeclaringSyntaxReferences.Count(dcs => dcs.GetSyntax().SyntaxTree.FilePath.EndsWith(".g.cs", StringComparison.Ordinal)) > 1)
+        ////{
+        ////    var diagnostic = Diagnostic.Create(Rules.ValueObject_MustNotHavePartialImplementation,
+        ////                                       tds.Identifier.GetLocation(),
+        ////                                       type.Name);
+
+        ////    context.ReportDiagnostic(diagnostic);
+        ////    return;
+        ////}
 
         // record should be marked as partial
         if (!rds.IsPartial())
