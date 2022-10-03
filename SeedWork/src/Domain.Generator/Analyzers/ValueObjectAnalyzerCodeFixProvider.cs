@@ -1,15 +1,13 @@
 ﻿using System.Collections.Immutable;
 using System.Composition;
 
-using Cranks.SeedWork.Domain.Generator.Analyzers;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
+namespace Cranks.SeedWork.Domain.Generator.Analyzers;
 
 [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ValueObjectAnalyzerCodeFixProvider))]
 [Shared]
@@ -28,6 +26,17 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
     {
         foreach (var diagnostic in context.Diagnostics)
         {
+            if (diagnostic.Id == Rules.ValueObject_MustBeRecord.Id)
+            {
+                var title = Rules.ValueObject_MustBeRecord.Title.ToString();
+
+                var action = CodeAction.Create(title,
+                                               token => MakeRecordAsync(context, diagnostic, token),
+                                               title);
+
+                context.RegisterCodeFix(action, diagnostic);
+            }
+
             if (diagnostic.Id == Rules.ValueObject_MustBePartial.Id)
             {
                 var title = Rules.ValueObject_MustBePartial.Title.ToString();
@@ -38,39 +47,9 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
 
                 context.RegisterCodeFix(action, diagnostic);
             }
-
-            if (diagnostic.Id == Rules.ValueObject_MustBePartial.Id)
-            {
-                var title = Rules.ValueObject_MustBePartial.Title.ToString();
-
-                var action = CodeAction.Create(title,
-                                               token => MakeRecordAsync(context, diagnostic, token),
-                                               title);
-
-                context.RegisterCodeFix(action, diagnostic);
-            }
         }
 
         return Task.CompletedTask;
-    }
-
-    private static async Task<Document> MakePartialAsync(CodeFixContext context,
-                                                         Diagnostic diagnostic,
-                                                         CancellationToken cancellationToken)
-    {
-        var root = await context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
-        if (root is null)
-        {
-            return context.Document;
-        }
-
-        var rds = FindTypeDeclaration(diagnostic, root);
-        var newRds = rds.AddModifiers(SyntaxFactory.Token(SyntaxKind.PartialKeyword));
-        var newRoot = root.ReplaceNode(rds, newRds);
-        var newDocument = context.Document.WithSyntaxRoot(newRoot);
-
-        return newDocument;
     }
 
     private static async Task<Document> MakeRecordAsync(CodeFixContext context,
@@ -105,9 +84,9 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
         return newDocument;
     }
 
-    private static async Task<Document> DeriveFromValueObjectAsync(CodeFixContext context,
-                                                                   Diagnostic diagnostic,
-                                                                   CancellationToken cancellationToken)
+    private static async Task<Document> MakePartialAsync(CodeFixContext context,
+                                                         Diagnostic diagnostic,
+                                                         CancellationToken cancellationToken)
     {
         var root = await context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
@@ -116,11 +95,8 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
             return context.Document;
         }
 
-        var rds = FindTypeDeclaration(diagnostic, root);
-
-        // TODO replace nodes
-        var newRds = rds.WithBaseList(rds.BaseList);
-
+        var rds = FindRecordDeclaration(diagnostic, root);
+        var newRds = rds.AddModifiers(SyntaxFactory.Token(SyntaxKind.PartialKeyword));
         var newRoot = root.ReplaceNode(rds, newRds);
         var newDocument = context.Document.WithSyntaxRoot(newRoot);
 
@@ -136,5 +112,11 @@ public class ValueObjectAnalyzerCodeFixProvider : CodeFixProvider
                    .Parent?.AncestorsAndSelf()
                    .OfType<TypeDeclarationSyntax>()
                    .First()!;
+    }
+
+    private static TypeDeclarationSyntax FindRecordDeclaration(Diagnostic diagnostic,
+                                                               SyntaxNode root)
+    {
+        return (FindTypeDeclaration(diagnostic, root) as RecordDeclarationSyntax)!;
     }
 }

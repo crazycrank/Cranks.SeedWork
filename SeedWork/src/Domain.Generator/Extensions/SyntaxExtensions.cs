@@ -48,4 +48,15 @@ internal static class SyntaxExtensions
 
     public static bool IsSubTypeOf(this BaseTypeDeclarationSyntax? node, string baseTypeName)
         => node?.BaseList?.Types.Any(t => t.ExtractName()?.Equals(baseTypeName, StringComparison.Ordinal) ?? false) ?? false;
+
+    public static bool IsNestedTypeDeclaration(this SyntaxNode? node)
+    {
+        if (node is null)
+        {
+            return false;
+        }
+
+        return node.Parent is BaseTypeDeclarationSyntax
+               || IsNestedTypeDeclaration(node.Parent);
+    }
 }

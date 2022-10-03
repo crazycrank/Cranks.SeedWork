@@ -9,7 +9,7 @@ internal static class SymbolExtensions
         return type.GetAttributes()
                    .Any(a => a is
                              {
-                                 AttributeClass.Name: "",
+                                 AttributeClass.Name: "ValueObjectAttribute",
                                  AttributeClass.ContainingAssembly.Name: "Cranks.SeedWork.Domain",
                                  AttributeClass.ContainingNamespace.Name: "Domain",
                              });
@@ -23,6 +23,17 @@ internal static class SymbolExtensions
                            ContainingAssembly.Name: "Cranks.SeedWork.Domain",
                            ContainingNamespace.Name: "Domain",
                            IsGenericType: true,
+                       };
+    }
+
+    public static bool IsValueObjectBaseClass(this ISymbol type)
+    {
+        return type is INamedTypeSymbol
+                       {
+                           Name: "ValueObject",
+                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
+                           ContainingNamespace.Name: "Domain",
+                           IsGenericType: false,
                        };
     }
 
