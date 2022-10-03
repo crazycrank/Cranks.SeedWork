@@ -1,5 +1,5 @@
 ﻿using Verify = Cranks.SeedWork.Domain.Generator.Tests.Verifiers.CSharpSourceGeneratorVerifier<
-    Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers.ValueObjectSourceGenerator>;
+    Cranks.SeedWork.Domain.Generator.Generators.ValueObjectSourceGenerator>;
 
 namespace Cranks.SeedWork.Domain.Generator.Tests.ValueObjectAnalyzers;
 

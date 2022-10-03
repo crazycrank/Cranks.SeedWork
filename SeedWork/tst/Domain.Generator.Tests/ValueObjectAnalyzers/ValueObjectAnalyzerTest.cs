@@ -1,4 +1,4 @@
-﻿using Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers;
+﻿using Cranks.SeedWork.Domain.Generator.Analyzers;
 
 using Verify = Cranks.SeedWork.Domain.Generator.Tests.Verifiers.CSharpCodeFixVerifier<
     Cranks.SeedWork.Domain.Generator.ValueObjectAnalyzers.ValueObjectAnalyzer,
@@ -46,7 +46,7 @@ public class ValueObjectAnalyzerTest
     public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBePartialId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(Rules.ValueObject_MustBePartial).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 
@@ -71,7 +71,7 @@ public class ValueObjectAnalyzerTest
     }
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustBeRecordId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(Rules.ValueObject_MustBeRecord.Id).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 
@@ -92,7 +92,7 @@ public class ValueObjectAnalyzerTest
     public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustDeriveFromValueObjectId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(Rules.ValueObject_MustDeriveFromValueObject.Id).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 
@@ -117,7 +117,7 @@ public class ValueObjectAnalyzerTest
     public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustDeriveFromValueObjectId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(Rules.ValueObject_MustDeriveFromValueObject.Id).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 
@@ -142,7 +142,7 @@ public class ValueObjectAnalyzerTest
     public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>, IInterface;
 ";
 
-        var expected = Verify.Diagnostic(ValueObjectAnalyzer.MustDeriveFromValueObjectId).WithLocation(0).WithArguments("TestValueObject");
+        var expected = Verify.Diagnostic(Rules.ValueObject_MustDeriveFromValueObject.Id).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 }
