@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Text;
 
 using Cranks.SeedWork.Domain.Generator.Extensions;
@@ -13,6 +14,14 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+#if DEBUG
+        if (!Debugger.IsAttached)
+        { // uncomment to debug during dotnet build
+////#warning DO NOT CHECKIN
+////            Debugger.Launch();
+        }
+#endif
+
         var valueObjects = context.SyntaxProvider
                                   .ForAttributeWithMetadataName("Cranks.SeedWork.Domain.ValueObjectAttribute",
                                                                 (n, _) => n is RecordDeclarationSyntax rds && rds.IsPartial(),
@@ -68,9 +77,7 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
                       {
                           Name = context.TargetSymbol.Name,
                           IsGlobalNamespace = context.TargetSymbol.ContainingNamespace.IsGlobalNamespace,
-                          Namespace = context.TargetSymbol.ContainingNamespace.IsGlobalNamespace
-                                          ? null
-                                          : context.TargetSymbol.ContainingNamespace.Name,
+                          Namespace = context.TargetSymbol.ContainingNamespace.ToString(),
                           Parameters = parameters.Select(p => (p.Name, p.Type.GetFullName())).ToImmutableList(),
                       };
 
@@ -113,6 +120,7 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
         var recordSymbol = compilation.GetTypeByMetadataName(details.FullName);
+
         if (recordSymbol is null)
         {
             return null;
