@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Domain.Generator\Domain.Generator.csproj"
+    <ProjectReference Include="..\..\src\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" 
                       PrivateAssets="all"
                       ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer"/>
+                      OutputItemType="Analyzer"
+                      />
     <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
 
