@@ -1,14 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>10.0</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackageTags>$(PackageTags) domain generator analyzer</PackageTags>
-  </PropertyGroup>
-
+  <!-- packages for analyzer development -->
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces"
                       Version="4.3.0" 
@@ -37,10 +30,10 @@
     see: https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#advanced-extension-points-to-create-customized-package
   -->
   <PropertyGroup>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetMyPackageFiles</TargetsForTfmSpecificBuildOutput>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetAnalyzerFiles</TargetsForTfmSpecificBuildOutput>
   </PropertyGroup>
 
-  <Target Name="GetMyPackageFiles">
+  <Target Name="GetAnalyzerFiles">
     <ItemGroup>
       <BuildOutputInPackage Include="$(OutputPath)$(AssemblyName).dll">
         <TargetPath>\analyzers\dotnet\cs</TargetPath>

@@ -3,9 +3,9 @@
     <PackageTags>$(PackageTags) domain</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain.Generator\Domain.Generator.csproj"
-                      PrivateAsset="all"
+    <ProjectReference Include="..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
+                      PrivateAsset="lib"
                       IncludeAssets="analyzers"
-                      />
+    />
   </ItemGroup>
 </Project>
