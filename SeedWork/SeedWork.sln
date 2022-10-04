@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Test", "tst\Domain.T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{2E4DA7B7-4F53-4EF1-A54C-0D633A68518A}"
 	ProjectSection(SolutionItems) = preProject
-		.config\dotnet-tools.json = .config\dotnet-tools.json
+		..\.config\dotnet-tools.json = ..\.config\dotnet-tools.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{55BE5FC7-5005-458B-9299-830BB3E49DAF}"
