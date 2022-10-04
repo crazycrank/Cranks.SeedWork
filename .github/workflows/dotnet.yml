@@ -68,7 +68,8 @@ jobs:
       run: dotnet restore SeedWork/SeedWork.sln
 
     - name: Build
-      run: dotnet build SeedWork/SeedWork.sln \
+      run: |
+        dotnet build SeedWork/SeedWork.sln \
         --no-restore \
         --configuration ${{ env.BUILD_CONFIGURATION }} \
         -p:VersionPrefix=${{ env.GitVersion_MajorMinorPatch }} \
@@ -76,13 +77,15 @@ jobs:
         -p:InformationalVersion=${{ env.GitVersion_InformationalVersion }}
 
     - name: Test
-      run: dotnet test SeedWork/SeedWork.sln \
+      run: |
+        dotnet test SeedWork/SeedWork.sln \
         --no-build \
         --configuration ${{ env.BUILD_CONFIGURATION }}
 
     - name: Pack
       if: contains(env.GitVersion_BranchName, 'master') || contains(env.GitVersion_BranchName, 'develop')
-      run: dotnet pack SeedWork/SeedWork.sln \
+      run: |
+        dotnet pack SeedWork/SeedWork.sln \
         --no-build \
         --configuration ${{ env.BUILD_CONFIGURATION }} \
         --include-symbols \
@@ -93,7 +96,8 @@ jobs:
 
     - name: Nuget Publish
       if: contains(env.GitVersion_BranchName, 'master') || contains(env.GitVersion_BranchName, 'develop')
-      run: dotnet nuget push \
+      run: |
+        dotnet nuget push \
         nupkgs/Cranks.SeedWork.Core.${{ env.SemVer }}.nupkg \
         --api-key ${{ secrets.NuGetAPIKey }} \
         --source https://api.nuget.org/v3/index.json
