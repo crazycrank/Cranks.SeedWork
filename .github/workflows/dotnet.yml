@@ -47,7 +47,7 @@ jobs:
         
     - name: Install GitVersion
       if: steps.cache-gitversion.outputs.cache-hit != 'true'
-      run: dotnet tool restore -verbosity diagnostic
+      run: dotnet tool restore --verbosity diagnostic
         
     - name: Determine Version
       id: gitversion
