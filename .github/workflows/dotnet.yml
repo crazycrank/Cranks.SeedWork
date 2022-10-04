@@ -28,7 +28,7 @@ jobs:
       uses: actions/cache@v3
       id: cache-dotnet
       with:
-        path: ~/runner/.dotnet
+        path: ~/runner/.nuget/packages/gitversion.tool
         key: ${{ runner.os }}-dotnet-${{ hashFiles('global.json') }}
         
     - name: Setup .NET
