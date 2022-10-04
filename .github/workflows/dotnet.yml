@@ -38,12 +38,12 @@ jobs:
         dotnet-version: 6.0.x
         include-prerelease: false
         
-    #- name: Cache GitVersion
-    #  uses: actions/cache@v3
-    #  id: cache-gitversion 
-    #  with:
-    #    path: ~/runner/.gitversion
-    #    key: ${{ runner.os }}-gitversion
+    - name: Cache GitVersion
+      uses: actions/cache@v3
+      id: cache-gitversion 
+      with:
+        path: ~/runner/.gitversion
+        key: ${{ runner.os }}-nuget-${{ hashFiles('./config/dotnet-tools.json') }}
         
     - name: Install GitVersion
       if: steps.cache-gitversion.outputs.cache-hit != 'true'
