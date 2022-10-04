@@ -44,11 +44,11 @@ jobs:
     #  with:
     #    path: ~/runner/.gitversion
     #    key: ${{ runner.os }}-gitversion-${{ hashFiles('./config/dotnet-tools.json') }}
-        
+
     - name: Install GitVersion
       #if: steps.cache-gitversion.outputs.cache-hit != 'true'
       run: dotnet tool restore
-        
+
     - name: Determine Version
       id: gitversion
       run: dotnet gitversion /output buildserver
@@ -62,7 +62,7 @@ jobs:
           SeedWork/src/Core/obj/project.assets.json
           SeedWork/tst/Core.Tests/obj/project.assets.json
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-        
+
     - name: Restore dependencies
       #if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: dotnet restore SeedWork/SeedWork.sln
@@ -98,7 +98,7 @@ jobs:
       if: contains(env.GitVersion_BranchName, 'master') || contains(env.GitVersion_BranchName, 'develop')
       run: |
         dotnet nuget push \
-        nupkgs/Cranks.SeedWork.Core.${{ env.SemVer }}.nupkg \
+        nupkgs/Cranks.SeedWork.*.${{ env.SemVer }}.nupkg \
         --api-key ${{ secrets.NuGetAPIKey }} \
         --source https://api.nuget.org/v3/index.json
 
