@@ -1,29 +1,30 @@
 ﻿<Project>
 
+  <!-- common configurations -->
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <WarningLevel>9999</WarningLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>6.0-recommended</AnalysisLevel>
+    <SourceRootDir>$(MSBuildThisFileDirectory)</SourceRootDir>
+    <RepositoryRootDir>$(MSBuildThisFileDirectory)..\</RepositoryRootDir>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AssemblyName>Cranks.SeedWork.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>Cranks.SeedWork.$(MSBuildProjectName)</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Build configurations -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <!-- Override Compiler because of bug int dotnet cli. Remove with VS17.4-->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.4.0-2.final">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  
   <!-- Analyzers-->
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.3.44">
@@ -36,19 +37,13 @@
     </PackageReference>
   </ItemGroup>
 
-  <PropertyGroup>
-    <AssemblyName>Cranks.SeedWork.$(MSBuildProjectName)</AssemblyName>
-    <RootNamespace>Cranks.SeedWork.$(MSBuildProjectName)</RootNamespace>
-    <Authors>Max Obrist</Authors>
-    <Copyright>$([System.DateTime]::Today.Year)</Copyright>
-    <PackageProjectUrl>https://github.com/crazycrank/Cranks.SeedWork</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/crazycrank/Cranks.SeedWork</RepositoryUrl>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>cranks seedwork ddd net</PackageTags>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
+
+  <!-- Override Compiler because of bug int dotnet cli. Remove with VS17.4-->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.4.0-2.final">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
 </Project>

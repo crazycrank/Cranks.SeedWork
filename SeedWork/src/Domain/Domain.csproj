@@ -1,5 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <IsTrimmable>true</IsTrimmable>
+    <PackageTags>$(PackageTags) domain</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Generator\Domain.Generator.csproj"
+                      PrivateAsset="all"
+                      IncludeAssets="analyzers"
+                      />
+  </ItemGroup>
 </Project>

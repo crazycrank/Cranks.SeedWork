@@ -1,0 +1,25 @@
+﻿<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!-- extended project configuration -->
+  <PropertyGroup>
+    <EnableAOTAnalyzer>true</EnableAOTAnalyzer>
+    <IsTrimmable>true</IsTrimmable>
+  </PropertyGroup>
+
+  <!-- Package Configuration -->
+  <PropertyGroup>
+    <Authors>Max Obrist</Authors>
+    <Product>Cranks.SeedWork</Product>
+    <Company>Cranks</Company>
+    <PackageTags>cranks seedwork ddd net</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Copyright>$([System.DateTime]::Today.Year)</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/crazycrank/Cranks.SeedWork</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/crazycrank/Cranks.SeedWork</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
