@@ -98,7 +98,7 @@ jobs:
       if: contains(env.GitVersion_BranchName, 'master') || contains(env.GitVersion_BranchName, 'develop')
       run: |
         dotnet nuget push \
-        nupkgs/Cranks.SeedWork.*.${{ env.SemVer }}.nupkg \
+        "nupkgs/Cranks.SeedWork.*.${{ env.GitVersion_SemVer }}.nupkg" \
         --api-key ${{ secrets.NuGetAPIKey }} \
         --source https://api.nuget.org/v3/index.json
 
