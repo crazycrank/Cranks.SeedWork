@@ -43,11 +43,11 @@ jobs:
       id: cache-gitversion 
       with:
         path: ~/runner/.gitversion
-        key: ${{ runner.os }}-nuget-${{ hashFiles('./config/dotnet-tools.json') }}
+        key: ${{ runner.os }}-gitversion-${{ hashFiles('./config/dotnet-tools.json') }}
         
     - name: Install GitVersion
       if: steps.cache-gitversion.outputs.cache-hit != 'true'
-      run: dotnet tool restore
+      run: dotnet tool restore -verbosity diagnostic
         
     - name: Determine Version
       id: gitversion
