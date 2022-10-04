@@ -105,5 +105,5 @@ jobs:
     - name: Tag commit with version
       if: contains(env.GitVersion_BranchName, 'master') || contains(env.GitVersion_BranchName, 'develop')
       run: |
-        git tag v${{ env.SemVer }}
+        git tag v${{ env.GitVersion_SemVer }}
         git push --tag
