@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Cranks.SeedWork.Domain.Generator.Analyzers;
 
-internal static class Rules
+internal static partial class Rules
 {
     public static readonly DiagnosticDescriptor ValueObject_MustBePartial
         = new("SEED0001",
