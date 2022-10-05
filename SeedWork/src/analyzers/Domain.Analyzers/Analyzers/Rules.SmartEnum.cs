@@ -88,7 +88,7 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor SmartEnums_ShouldBeSealed
+    public static readonly DiagnosticDescriptor SmartEnums_MustBeSealed
         = new("SEED0111",
               "SmartEnum should be sealed",
               "The smart enum '{0}' contains duplicates for the same key.", // TODO
