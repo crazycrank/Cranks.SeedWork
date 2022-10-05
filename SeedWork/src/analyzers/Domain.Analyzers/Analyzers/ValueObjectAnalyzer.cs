@@ -36,7 +36,7 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
 
     private static void Analyze(SymbolAnalysisContext context)
     {
-        // type symbol must be marked with ValueObjectattribute
+        // type symbol must be marked with ValueObjectAttribute
         if (context.Symbol is not INamedTypeSymbol type || !type.IsMarkedAsValueObject())
         {
             return;
