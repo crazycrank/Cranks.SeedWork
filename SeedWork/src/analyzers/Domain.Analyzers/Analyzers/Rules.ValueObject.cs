@@ -40,10 +40,18 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor ValueObject_MustHaveAtLeastOneParameter
+    public static readonly DiagnosticDescriptor ValueObject_ShouldNotBeNested
+        = new("SEED0005",
+              "ValueObject must not be a nested class",
+              "The value object '{0}' is nested inside another class. This is not supported",
+              Categories.Domain,
+              DiagnosticSeverity.Error,
+              true);
+
+    public static readonly DiagnosticDescriptor ValueObject_MustNotDeriveFromNonGenericValueObject
         = new("SEED0006",
-              "Primary constructor is expected to have at least one parameter",
-              "The primary constructor for '{0}' is expected to have at least one parameter",
+              "Do not derive from non-generic ValueObject",
+              "The value object '{0}' derives from the non-generic ValueObject base class, which is non intended to be derived from directly",
               Categories.Domain,
               DiagnosticSeverity.Error,
               true);
@@ -56,27 +64,19 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor ValueObject_AllParametersShouldBeEquatable
+    public static readonly DiagnosticDescriptor ValueObject_MustHaveAtLeastOneParameter
         = new("SEED0008",
+              "Primary constructor is expected to have at least one parameter",
+              "The primary constructor for '{0}' is expected to have at least one parameter",
+              Categories.Domain,
+              DiagnosticSeverity.Error,
+              true);
+
+    public static readonly DiagnosticDescriptor ValueObject_AllParametersShouldBeEquatable
+        = new("SEED0009",
               "ValueObject parameters should be equatable",
               "The value object '{0}' should only have parameters which are equatable",
               Categories.Domain,
               DiagnosticSeverity.Warning,
-              true);
-
-    public static readonly DiagnosticDescriptor ValueObject_ShouldNotBeNested
-        = new("SEED0009",
-              "ValueObject must not be a nested class",
-              "The value object '{0}' is nested inside another class. This is not supported",
-              Categories.Domain,
-              DiagnosticSeverity.Error,
-              true);
-
-    public static readonly DiagnosticDescriptor ValueObject_MustNotDeriveFromNonGenericValueObject
-        = new("SEED0010",
-              "Do not derive from non-generic ValueObject",
-              "The value object '{0}' derives from the non-generic ValueObject base class, which is non intended to be derived from directly",
-              Categories.Domain,
-              DiagnosticSeverity.Error,
               true);
 }

@@ -15,6 +15,17 @@ internal static class SymbolExtensions
                              });
     }
 
+    public static bool IsMarkedAsSmartEnum(this ISymbol type)
+    {
+        return type.GetAttributes()
+                   .Any(a => a is
+                             {
+                                 AttributeClass.Name: "SmartEnumAttribute",
+                                 AttributeClass.ContainingAssembly.Name: "Cranks.SeedWork.Domain",
+                                 AttributeClass.ContainingNamespace.Name: "Domain",
+                             });
+    }
+
     public static bool IsValueObjectGenericBaseClass(this ISymbol type)
     {
         return type is INamedTypeSymbol
@@ -31,6 +42,28 @@ internal static class SymbolExtensions
         return type is INamedTypeSymbol
                        {
                            Name: "ValueObject",
+                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
+                           ContainingNamespace.Name: "Domain",
+                           IsGenericType: false,
+                       };
+    }
+
+    public static bool IsSmartEnumGenericBaseClass(this ISymbol type)
+    {
+        return type is INamedTypeSymbol
+                       {
+                           Name: "SmartEnum",
+                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
+                           ContainingNamespace.Name: "Domain",
+                           IsGenericType: true,
+                       };
+    }
+
+    public static bool IsSmartEnumBaseClass(this ISymbol type)
+    {
+        return type is INamedTypeSymbol
+                       {
+                           Name: "SmartEnum",
                            ContainingAssembly.Name: "Cranks.SeedWork.Domain",
                            ContainingNamespace.Name: "Domain",
                            IsGenericType: false,
