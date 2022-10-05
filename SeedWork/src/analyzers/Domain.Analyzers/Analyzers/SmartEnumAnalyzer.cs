@@ -12,7 +12,13 @@ namespace Cranks.SeedWork.Domain.Generator.Analyzers;
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class SmartEnumAnalyzer : DiagnosticAnalyzer
 {
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create<DiagnosticDescriptor>();
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+        => ImmutableArray.Create(Rules.SmartEnum_MustBeRecord,
+                                 Rules.SmartEnum_MustBePartial,
+                                 Rules.SmartEnum_MustDeriveFromSmartEnum,
+                                 Rules.SmartEnums_MustBeSealed,
+                                 Rules.SmartEnum_MustNotDeriveFromNonGenericSmartEnum,
+                                 Rules.SmartEnum_ShouldNotBeNested);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -71,6 +77,15 @@ public class SmartEnumAnalyzer : DiagnosticAnalyzer
         if (!rds.IsPartial())
         {
             var diagnostic = Diagnostic.Create(Rules.SmartEnum_MustBePartial,
+                                               rds.Identifier.GetLocation(),
+                                               type.Name);
+
+            context.ReportDiagnostic(diagnostic);
+        }
+
+        if (!type.IsSealed)
+        {
+            var diagnostic = Diagnostic.Create(Rules.SmartEnums_MustBeSealed,
                                                rds.Identifier.GetLocation(),
                                                type.Name);
 
