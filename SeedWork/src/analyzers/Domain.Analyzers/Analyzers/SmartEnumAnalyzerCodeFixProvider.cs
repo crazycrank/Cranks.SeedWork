@@ -15,7 +15,8 @@ public class SmartEnumAnalyzerCodeFixProvider : CodeFixProvider
 {
     public sealed override ImmutableArray<string> FixableDiagnosticIds
         => ImmutableArray.Create(Rules.SmartEnum_MustBePartial.Id,
-                                 Rules.SmartEnum_MustBeRecord.Id);
+                                 Rules.SmartEnum_MustBeRecord.Id,
+                                 Rules.SmartEnum_MustBeSealed.Id);
 
     public sealed override FixAllProvider GetFixAllProvider()
     {
@@ -43,6 +44,17 @@ public class SmartEnumAnalyzerCodeFixProvider : CodeFixProvider
 
                 var action = CodeAction.Create(title,
                                                token => MakePartialAsync(context, diagnostic, token),
+                                               title);
+
+                context.RegisterCodeFix(action, diagnostic);
+            }
+
+            if (diagnostic.Id == Rules.SmartEnum_MustBeSealed.Id)
+            {
+                var title = Rules.SmartEnum_MustBeSealed.Title.ToString();
+
+                var action = CodeAction.Create(title,
+                                               token => MakeSealedAsync(context, diagnostic, token),
                                                title);
 
                 context.RegisterCodeFix(action, diagnostic);
@@ -97,6 +109,27 @@ public class SmartEnumAnalyzerCodeFixProvider : CodeFixProvider
 
         var rds = FindRecordDeclaration(diagnostic, root);
         var newRds = rds.AddModifiers(SyntaxFactory.Token(SyntaxKind.PartialKeyword));
+        var newRoot = root.ReplaceNode(rds, newRds);
+        var newDocument = context.Document.WithSyntaxRoot(newRoot);
+
+        return newDocument;
+    }
+
+    private static async Task<Document> MakeSealedAsync(CodeFixContext context,
+                                                        Diagnostic diagnostic,
+                                                        CancellationToken cancellationToken)
+    {
+        var root = await context.Document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+
+        if (root is null)
+        {
+            return context.Document;
+        }
+
+        var rds = FindRecordDeclaration(diagnostic, root);
+
+        var indexOfPartial = rds.Modifiers.IndexOf(SyntaxKind.PartialKeyword);
+        var newRds = rds.WithModifiers(rds.Modifiers.Insert(indexOfPartial, SyntaxFactory.Token(SyntaxKind.SealedKeyword)));
         var newRoot = root.ReplaceNode(rds, newRds);
         var newDocument = context.Document.WithSyntaxRoot(newRoot);
 

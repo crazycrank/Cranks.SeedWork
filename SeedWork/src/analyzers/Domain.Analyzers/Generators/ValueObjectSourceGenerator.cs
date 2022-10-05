@@ -100,6 +100,7 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
     {
         var code = new StringBuilder();
         code.AppendFileHeader()
+            .AppendUsings()
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
         using (new RecordContext(code, details.Name))
@@ -117,6 +118,7 @@ public class ValueObjectSourceGenerator : IIncrementalGenerator
 
         var code = new StringBuilder();
         code.AppendFileHeader()
+            .AppendUsings()
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
         var recordSymbol = compilation.GetTypeByMetadataName(details.FullName);

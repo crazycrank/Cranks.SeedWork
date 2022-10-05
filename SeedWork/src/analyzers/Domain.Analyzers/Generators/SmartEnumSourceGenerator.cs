@@ -107,6 +107,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
     {
         var code = new StringBuilder();
         code.AppendFileHeader()
+            .AppendUsings()
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
         using (new RecordContext(code, details.Name))
@@ -118,9 +119,9 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
 
         void GenerateCastOperators()
             => code.AppendLine(
-                @$"    public static explicit operator {details.Name}?({details.KeyType} key)
+                @$"    public static explicit operator {details.Name}({details.KeyType} key)
     {{
-        return {details.Name}.TryGet(key, out var @enum) ? @enum : null;
+        return {details.Name}.TryGet(key, out var @enum) ? @enum : throw new System.InvalidCastException($""Cannot cast '{{key}}' to {details.Name}"");
     }}
 
     public static explicit operator {details.KeyType}({details.Name} @enum)
@@ -133,6 +134,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
     {
         var code = new StringBuilder();
         code.AppendFileHeader()
+            .AppendUsings()
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
         using (new RecordContext(code, details.Name))
@@ -153,6 +155,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
     {
         var code = new StringBuilder();
         code.AppendFileHeader()
+            .AppendUsings("System.Diagnostics.CodeAnalysis")
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
         using (new RecordContext(code, details.Name))
