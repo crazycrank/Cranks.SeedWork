@@ -64,7 +64,7 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor SmartEnums_MustNotBeInstantiated
+    public static readonly DiagnosticDescriptor SmartEnum_MustNotBeInstantiated
         = new("SEED0108",
               "SmartEnums must not be instantiated outside their defining class",
               "The smart enum '{0}' directly instantiated outside it's definining class. This is not supported.",
@@ -72,7 +72,7 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor SmartEnums_DuplicateKey
+    public static readonly DiagnosticDescriptor SmartEnum_DuplicateKey
         = new("SEED0109",
               "SmartEnum contains duplicate key",
               "The smart enum '{0}' contains duplicates for the same key.",
@@ -80,7 +80,7 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor SmartEnums_DoNotUseWithExpression
+    public static readonly DiagnosticDescriptor SmartEnum_DoNotUseWithExpression
         = new("SEED0110",
               "Do not use with expression on SmartEnum",
               "The smart enum '{0}' contains duplicates for the same key.", // TODO
@@ -88,11 +88,11 @@ internal static partial class Rules
               DiagnosticSeverity.Error,
               true);
 
-    public static readonly DiagnosticDescriptor SmartEnums_MustBeSealed
+    public static readonly DiagnosticDescriptor SmartEnum_MustBeSealed
         = new("SEED0111",
               "SmartEnum should be sealed",
-              "The smart enum '{0}' contains duplicates for the same key.", // TODO
+              "The smart enum '{0}' is not sealed, but should be.", // TODO
               Categories.Domain,
-              DiagnosticSeverity.Warning,
+              DiagnosticSeverity.Error,
               true);
 }

@@ -16,7 +16,7 @@ public class SmartEnumAnalyzer : DiagnosticAnalyzer
         => ImmutableArray.Create(Rules.SmartEnum_MustBeRecord,
                                  Rules.SmartEnum_MustBePartial,
                                  Rules.SmartEnum_MustDeriveFromSmartEnum,
-                                 Rules.SmartEnums_MustBeSealed,
+                                 Rules.SmartEnum_MustBeSealed,
                                  Rules.SmartEnum_MustNotDeriveFromNonGenericSmartEnum,
                                  Rules.SmartEnum_ShouldNotBeNested);
 
@@ -85,7 +85,7 @@ public class SmartEnumAnalyzer : DiagnosticAnalyzer
 
         if (!type.IsSealed)
         {
-            var diagnostic = Diagnostic.Create(Rules.SmartEnums_MustBeSealed,
+            var diagnostic = Diagnostic.Create(Rules.SmartEnum_MustBeSealed,
                                                rds.Identifier.GetLocation(),
                                                type.Name);
 

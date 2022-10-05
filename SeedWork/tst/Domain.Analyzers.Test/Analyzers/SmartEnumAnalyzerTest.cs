@@ -177,7 +177,14 @@ public class SmartEnumAnalyzerTest
     public partial record {|#0:TestSmartEnum|}(int Key) : SmartEnum<int>(Key);
 ";
 
-        var expected = Verify.Diagnostic(Rules.SmartEnums_MustBeSealed.Id).WithLocation(0).WithArguments("TestSmartEnum");
-        await Verify.VerifyAnalyzerAsync(testCode, expected);
+        var testCodeExpected = @"
+    using Cranks.SeedWork.Domain;
+
+    [SmartEnum]
+    public sealed partial record {|#0:TestSmartEnum|}(int Key) : SmartEnum<int>(Key);
+";
+
+        var expected = Verify.Diagnostic(Rules.SmartEnum_MustBeSealed.Id).WithLocation(0).WithArguments("TestSmartEnum");
+        await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, expected);
     }
 }
