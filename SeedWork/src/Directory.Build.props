@@ -7,8 +7,19 @@
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
+  <!-- include analyzer dll in analyzer folder-->
+  <ItemGroup>
+    <None Condition="Exists('$(OutputPath)\$(AssemblyName).Analyzers.dll')"
+          Include="$(OutputPath)\$(AssemblyName).Analyzers.dll"
+          Pack="true"
+          PackagePath="analyzers\dotnet\cs"
+          Visible="false" />
+  </ItemGroup>
+
   <!-- Package Configuration -->
   <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSources>true</IncludeSources>
     <Authors>Max Obrist</Authors>
     <Product>Cranks.SeedWork</Product>
     <Company>Cranks</Company>

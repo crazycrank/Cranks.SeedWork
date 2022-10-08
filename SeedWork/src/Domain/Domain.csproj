@@ -2,10 +2,24 @@
   <PropertyGroup>
     <PackageTags>$(PackageTags) domain</PackageTags>
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
-                      PrivateAsset="lib"
-                      IncludeAssets="analyzers"
-    />
+    <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- include analyzer dll in analyzer folder-->
+  <ItemGroup>
+    <None Condition="Exists('$(OutputPath)\$(AssemblyName).Analyzers.dll')"
+          Include="$(OutputPath)\$(AssemblyName).Analyzers.dll"
+          Pack="true"
+          PackagePath="analyzers\dotnet\cs"
+          Visible="false" />
+  </ItemGroup>
+
+
 </Project>
+  

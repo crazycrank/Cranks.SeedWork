@@ -1,6 +1,10 @@
 ﻿<Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
   <!-- packages for analyzer development -->
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces"
@@ -24,21 +28,5 @@
                       PrivateAssets="all"
                       />
   </ItemGroup>
-
-  <!--
-    move dlls to analyzer folder in nuget package
-    see: https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#advanced-extension-points-to-create-customized-package
-  -->
-  <PropertyGroup>
-    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetAnalyzerFiles</TargetsForTfmSpecificBuildOutput>
-  </PropertyGroup>
-
-  <Target Name="GetAnalyzerFiles">
-    <ItemGroup>
-      <BuildOutputInPackage Include="$(OutputPath)$(AssemblyName).dll">
-        <TargetPath>\analyzers\dotnet\cs</TargetPath>
-      </BuildOutputInPackage>
-    </ItemGroup>
-  </Target>
 
 </Project>
