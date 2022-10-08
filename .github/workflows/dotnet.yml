@@ -28,15 +28,14 @@ jobs:
       uses: actions/cache@v3
       id: cache-dotnet
       with:
-        path: ~/runner/.nuget/packages/gitversion.tool
+        path: ~/runner/.dotnet
         key: ${{ runner.os }}-dotnet-${{ hashFiles('global.json') }}
         
     - name: Setup .NET
       if: steps.cache-dotnet.outputs.cache-hit != 'true'
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
-        include-prerelease: false
+        global-json-file: SeedWork/global.json
         
     #- name: Cache GitVersion
     #  uses: actions/cache@v3
@@ -88,8 +87,6 @@ jobs:
         dotnet pack SeedWork/SeedWork.sln \
         --no-build \
         --configuration ${{ env.BUILD_CONFIGURATION }} \
-        --include-symbols \
-        --include-source \
         --output nupkgs \
         -p:VersionPrefix=${{ env.GitVersion_MajorMinorPatch }} \
         -p:VersionSuffix=${{ env.GitVersion_PreReleaseTag }}
