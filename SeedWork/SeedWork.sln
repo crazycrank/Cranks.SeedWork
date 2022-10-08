@@ -17,7 +17,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{1B099541-64E2-4BB4-938F-6BBA2842BCE8}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		Directory.Build.Props = Directory.Build.Props
+		Directory.Build.props = Directory.Build.props
 		GitVersion.yml = GitVersion.yml
 		global.json = global.json
 		NuGet.Config = NuGet.Config
@@ -39,13 +39,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Analyzers", "src\analyzers\Domain.Analyzers\Domain.Analyzers.csproj", "{349CB9DD-FB17-4A94-993C-E82E2DBBAF3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Analyzers", "analyzers\Domain.Analyzers\Domain.Analyzers.csproj", "{349CB9DD-FB17-4A94-993C-E82E2DBBAF3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Analyzers.Test", "tst\Domain.Analyzers.Test\Domain.Analyzers.Test.csproj", "{5E7F34F5-D0FD-4C3F-91F9-75E54A30C223}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "analyzers", "analyzers", "{28D97580-6D12-4BA9-95C4-3BA7E98259B7}"
 	ProjectSection(SolutionItems) = preProject
-		src\analyzers\Directory.Build.props = src\analyzers\Directory.Build.props
+		analyzers\Directory.Build.props = analyzers\Directory.Build.props
 	EndProjectSection
 EndProject
 Global

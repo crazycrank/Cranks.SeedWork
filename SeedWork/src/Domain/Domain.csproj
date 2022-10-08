@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
+    <ProjectReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
                       PrivateAssets="all" />
   </ItemGroup>
 
