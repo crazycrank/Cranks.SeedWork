@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" />
+    <ProjectReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" />
     <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
   </ItemGroup>
 
