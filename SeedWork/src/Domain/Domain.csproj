@@ -6,34 +6,15 @@
 
   <ItemGroup>
     <!--
-      We have to include the immutable collections into the analyzer project, so we
       genereate the path property here, so we can later reference it
       See: https://turnerj.com/blog/the-pain-points-of-csharp-source-generators
     -->
-    <PackageReference Include="System.Collections.Immutable"
-                      Version="6.0.0"
-                      GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
-                      PrivateAssets="all" />
+    <AnalyzerReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
+                       Pack="true"
+                       ReferenceAnalyzer="false" />
   </ItemGroup>
-
-  <Target Name="AddAnalyzerDlls"
-          BeforeTargets="_GetPackageFiles">
-    <!-- include analyzer dll in analyzer folder-->
-    <ItemGroup>
-      <None Include="$(OutputPath)\$(AssemblyName).Analyzers.dll"
-            Pack="true"
-            Visible="false"
-            PackagePath="analyzers\dotnet\cs" />
-
-      <None Include="$(PKGSystem_Collections_Immutable)\lib\netstandard2.0\*.dll"
-            Pack="true"
-            Visible="false"
-            PackagePath="analyzers\dotnet\cs" />
-    </ItemGroup>
-  </Target>
 
 </Project>

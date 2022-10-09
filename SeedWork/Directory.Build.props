@@ -25,6 +25,13 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <!-- Analyzer Config for custom build steps -->
+  <PropertyGroup>
+    <AnalyzerRoslynVersion>4.0</AnalyzerRoslynVersion>
+    <!-- only compatible with VS2022 / net6.0+ -->
+    <RoslynApiVersion>4.0.1</RoslynApiVersion>
+  </PropertyGroup>
+
   <!-- Analyzers-->
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.3.44">
