@@ -25,6 +25,12 @@ public class SmartEnumAnalyzerCodeFixProvider : CodeFixProvider
 
     public sealed override Task RegisterCodeFixesAsync(CodeFixContext context)
     {
+#if LAUNCH_DEBUGGER
+        if (!System.Diagnostics.Debugger.IsAttached)
+        {
+            System.Diagnostics.Debugger.Launch();
+        }
+#endif
         foreach (var diagnostic in context.Diagnostics)
         {
             if (diagnostic.Id == Rules.SmartEnum_MustBeRecord.Id)

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Diagnostics;
 
 using Cranks.SeedWork.Domain.Generator.Extensions;
 
@@ -22,11 +21,10 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
 
     public override void Initialize(AnalysisContext context)
     {
-#if DEBUG
-        if (!Debugger.IsAttached)
-        { // uncomment to debug during dotnet build
-////#warning DO NOT CHECKIN
-////            Debugger.Launch();
+#if LAUNCH_DEBUGGER
+        if (!System.Diagnostics.Debugger.IsAttached)
+        {
+            System.Diagnostics.Debugger.Launch();
         }
 #endif
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
