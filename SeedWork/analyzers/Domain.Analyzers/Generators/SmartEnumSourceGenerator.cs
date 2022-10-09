@@ -5,6 +5,7 @@ using Cranks.SeedWork.Domain.Generator.Extensions;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.DotnetRuntime.Extensions;
 
 namespace Cranks.SeedWork.Domain.Generator.Generators;
 
@@ -21,7 +22,8 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
 #endif
 
         var smartEnums = context.SyntaxProvider
-                                .ForAttributeWithMetadataName("Cranks.SeedWork.Domain.SmartEnumAttribute",
+                                .ForAttributeWithMetadataName(context,
+                                                              "Cranks.SeedWork.Domain.SmartEnumAttribute",
                                                               (n, _) => n is RecordDeclarationSyntax rds && rds.IsPartial(),
                                                               GetSmartEnumDetails)
                                 .Where(details => details is not null);
