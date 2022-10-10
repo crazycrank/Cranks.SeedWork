@@ -1,11 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
-                      PrivateAssets="all"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer" />
     <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AnalyzerReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" Pack="false" ReferenceAnalyzer="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cranks.Targets.AnalyzerReference" Version="1.1.5" />
   </ItemGroup>
 
 </Project>
