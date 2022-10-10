@@ -2,7 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
+    <IsPackableAnalyzer>true</IsPackableAnalyzer>
     <DefineConstants Condition="'$(LaunchDebugger)' == 'true'">$(DefineConstants);LAUNCH_DEBUGGER</DefineConstants>
   </PropertyGroup>
 
@@ -13,6 +13,10 @@
 
   <!-- packages for analyzer development -->
   <ItemGroup>
+    <PackageReference Include="Cranks.Targets.Analyzer"
+                      Version="1.1.19"
+                      PrivateAssets="all" />
+
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces"
                       Version="[$(RoslynApiVersion)]"
                       PrivateAssets="all" />
@@ -21,32 +25,5 @@
                       Version="1.0.3"
                       PrivateAssets="all" />
   </ItemGroup>
-
-  <!-- NOTE: From https://github.com/dotnet/runtime/blob/main/src/libraries/Directory.Build.props -->
-  <!-- NOTE: This target analyses the build output and returns all files that are necessary to be packed into the
-             analyzer directory of the containing package-->
-  <Target Name="GetAnalyzerPackFiles"
-          DependsOnTargets="$(GenerateNuspecDependsOn)"
-          Returns="@(_AnalyzerPackFile)">
-    <PropertyGroup>
-      <_analyzerPath>analyzers/dotnet</_analyzerPath>
-      <_analyzerPath Condition="'$(AnalyzerRoslynVersion)' != ''">$(_analyzerPath)/roslyn$(AnalyzerRoslynVersion)</_analyzerPath>
-      <_analyzerPath Condition="'$(AnalyzerLanguage)' != ''">$(_analyzerPath)/$(AnalyzerLanguage)</_analyzerPath>
-    </PropertyGroup>
-
-    <Message Importance="high"
-             Text="$(_analyzerPath)" />
-
-    <ItemGroup>
-      <_AnalyzerPackFile Include="@(_BuildOutputInPackage)"
-                         IsSymbol="false" />
-      <_AnalyzerPackFile Include="@(_TargetPathsToSymbols)"
-                         IsSymbol="true" />
-      <_AnalyzerPackFile PackagePath="$(_analyzerPath)/%(TargetPath)" />
-    </ItemGroup>
-
-    <Error Condition="'%(_AnalyzerPackFile.TargetFramework)' != 'netstandard2.0'"
-           Text="Analyzers must only target netstandard2.0 since they run in the compiler which targets netstandard2.0. The following files were found to target '%(_AnalyzerPackFile.TargetFramework)': @(_AnalyzerPackFile)" />
-  </Target>
 
 </Project>
