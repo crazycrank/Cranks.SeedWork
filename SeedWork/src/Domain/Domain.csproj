@@ -5,16 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--
-      genereate the path property here, so we can later reference it
-      See: https://turnerj.com/blog/the-pain-points-of-csharp-source-generators
-    -->
+    <AnalyzerReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" Pack="true" ReferenceAnalyzer="false" />
   </ItemGroup>
 
   <ItemGroup>
-    <AnalyzerReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
-                       Pack="true"
-                       ReferenceAnalyzer="false" />
+    <PackageReference Include="Cranks.Targets.AnalyzerReference" Version="1.1.5" />
   </ItemGroup>
 
 </Project>
