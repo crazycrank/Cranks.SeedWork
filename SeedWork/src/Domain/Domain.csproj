@@ -2,14 +2,32 @@
 
   <PropertyGroup>
     <PackageTags>$(PackageTags) domain</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Title>Cranks DDD Seedwork - Domain Layer</Title>
+    <Description>
+      This package can act as a basis for the domain layer of your DDD application. It provides Analyzers ensuring correctness and
+      source generation to reduce the amount of Boilerplate code you have to write.
+
+      Still a very early version, it currently only supports Value Objects and Smart Enums.
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <AnalyzerReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj" Pack="true" ReferenceAnalyzer="false" />
+    <AnalyzerReference Include="..\..\analyzers\Domain.Analyzers\Domain.Analyzers.csproj"
+                       Pack="true"
+                       ReferenceAnalyzer="false" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cranks.Targets.AnalyzerReference" Version="1.1.0" />
+    <None Include="..\..\..\README.md"
+          Pack="True"
+          Link="README.md"
+          PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cranks.Targets.AnalyzerReference"
+                      Version="1.1.0" />
   </ItemGroup>
 
 </Project>
