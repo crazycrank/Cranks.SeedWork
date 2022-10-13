@@ -1,7 +1,6 @@
 ﻿using System.Text;
 
 using Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.Base;
-using Cranks.SeedWork.Domain.Attributes;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;

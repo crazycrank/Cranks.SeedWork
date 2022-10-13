@@ -1,4 +1,4 @@
-﻿namespace Cranks.SeedWork.Domain.Attributes;
+﻿namespace Cranks.SeedWork.Domain;
 
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class SmartEnumAttribute : Attribute
