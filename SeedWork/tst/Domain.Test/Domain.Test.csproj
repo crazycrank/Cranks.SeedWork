@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cranks.Targets.AnalyzerReference" Version="1.1.5" />
+    <PackageReference Include="Cranks.Targets.AnalyzerReference" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

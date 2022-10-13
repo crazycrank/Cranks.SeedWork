@@ -6,15 +6,10 @@
     <DefineConstants Condition="'$(LaunchDebugger)' == 'true'">$(DefineConstants);LAUNCH_DEBUGGER</DefineConstants>
   </PropertyGroup>
 
-  <!-- Analyzer Config for custom build steps -->
-  <PropertyGroup>
-    <AnalyzerLanguage>cs</AnalyzerLanguage>
-  </PropertyGroup>
-
   <!-- packages for analyzer development -->
   <ItemGroup>
     <PackageReference Include="Cranks.Targets.Analyzer"
-                      Version="1.1.19"
+                      Version="1.1.0"
                       PrivateAssets="all" />
 
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces"

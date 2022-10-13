@@ -27,27 +27,29 @@
 
   <!-- Analyzer Config for custom build steps -->
   <PropertyGroup>
+    <AnalyzerLanguage>cs</AnalyzerLanguage>
     <AnalyzerRoslynVersion>4.0</AnalyzerRoslynVersion>
-    <!-- only compatible with VS2022 / net6.0+ -->
-    <RoslynApiVersion>4.0.1</RoslynApiVersion>
+    <RoslynApiVersion>4.0.1</RoslynApiVersion> <!-- only compatible with VS2022 / net6.0+ -->
   </PropertyGroup>
 
   <!-- Analyzers-->
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.3.44">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers"
+                      Version="17.3.44">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+    <PackageReference Include="StyleCop.Analyzers"
+                      Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
-
   <!-- Override Compiler because of bug int dotnet cli. Remove with VS17.4-->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="4.4.0-2.final">
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset"
+                      Version="4.4.0-2.final">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
