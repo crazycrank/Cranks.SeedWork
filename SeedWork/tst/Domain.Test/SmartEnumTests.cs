@@ -1,6 +1,4 @@
-﻿using Cranks.SeedWork.Domain.Attributes;
-
-using Shouldly;
+﻿using Shouldly;
 
 namespace Cranks.SeedWork.Domain.Test;
 
@@ -17,20 +15,20 @@ public class SmartEnumTests : UnitTestBase
     [Fact]
     public void SmartEnumGet_WhenFound_ReturnEnum()
     {
-        Tests.Gender.Get(Gender.Male.Key).ShouldBe(Gender.Male);
+        Gender.Get(Gender.Male.Key).ShouldBe(Gender.Male);
     }
 
     [Fact]
     public void SmartEnumTryGet_WhenFound_ReturnTrue()
     {
-        Tests.Gender.TryGet(Gender.Male.Key, out var result).ShouldBeTrue();
+        Gender.TryGet(Gender.Male.Key, out var result).ShouldBeTrue();
         result.ShouldBe(Gender.Male);
     }
 
     [Fact]
     public void SmartEnumGet_WhenNotFound_Throws()
     {
-        Should.Throw<KeyNotFoundException>(() => Tests.Gender.Get(string.Empty));
+        Should.Throw<KeyNotFoundException>(() => Gender.Get(string.Empty));
     }
 
     [Fact]
@@ -49,16 +47,16 @@ public class SmartEnumTests : UnitTestBase
     [Fact]
     public void SmartEnumTryGet_WhenNotFound_ReturnsNull()
     {
-        Tests.Gender.TryGet(string.Empty, out var result).ShouldBeFalse();
+        Gender.TryGet(string.Empty, out var result).ShouldBeFalse();
         result.ShouldBeNull();
     }
 
     [Fact]
     public void SmartEnumGetValues_ShouldContainAllValues()
     {
-        Tests.Gender.AllValues.Count.ShouldBe(3);
-        Tests.Gender.AllValues.ShouldContain(Gender.Unknown);
-        Tests.Gender.AllValues.ShouldContain(Gender.Male);
-        Tests.Gender.AllValues.ShouldContain(Gender.Female);
+        Gender.AllValues.Count.ShouldBe(3);
+        Gender.AllValues.ShouldContain(Gender.Unknown);
+        Gender.AllValues.ShouldContain(Gender.Male);
+        Gender.AllValues.ShouldContain(Gender.Female);
     }
 }
