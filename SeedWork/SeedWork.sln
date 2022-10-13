@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_Solution
 		GitVersion.yml = GitVersion.yml
 		global.json = global.json
 		NuGet.Config = NuGet.Config
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{6ED738EF-CA5B-4ABF-ADA1-ECBB43993497}"
