@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Cranks.SeedWork.Domain.Generator.Extensions;
+namespace Cranks.SeedWork.Domain.Analyzers.Extensions;
 
 internal static class SymbolExtensions
 {

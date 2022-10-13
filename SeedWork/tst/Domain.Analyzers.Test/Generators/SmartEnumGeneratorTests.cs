@@ -1,7 +1,7 @@
-﻿using Verify = Cranks.SeedWork.Domain.Generator.Tests.Verifiers.CSharpSourceGeneratorVerifier<
-    Cranks.SeedWork.Domain.Generator.Generators.SmartEnumSourceGenerator>;
+﻿using Verify = Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.CSharpSourceGeneratorVerifier<
+    Cranks.SeedWork.Domain.Analyzers.Generators.SmartEnumSourceGenerator>;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Generators;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Generators;
 
 public class SmartEnumGeneratorTests
 {

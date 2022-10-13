@@ -1,6 +1,7 @@
 ﻿using System.Text;
 
-using Cranks.SeedWork.Domain.Generator.Tests.Verifiers.Base;
+using Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.Base;
+using Cranks.SeedWork.Domain.Attributes;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -8,7 +9,7 @@ using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Verifiers;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Verifiers;
 
 public static class CSharpSourceGeneratorVerifier<TSourceGenerator>
     where TSourceGenerator : IIncrementalGenerator, new()

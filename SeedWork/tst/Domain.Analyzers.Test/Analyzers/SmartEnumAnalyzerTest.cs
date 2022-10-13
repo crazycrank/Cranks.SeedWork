@@ -1,10 +1,10 @@
-﻿using Cranks.SeedWork.Domain.Generator.Analyzers;
+﻿using Cranks.SeedWork.Domain.Analyzers.Analyzers;
 
-using Verify = Cranks.SeedWork.Domain.Generator.Tests.Verifiers.CSharpCodeFixVerifier<
-    Cranks.SeedWork.Domain.Generator.Analyzers.SmartEnumAnalyzer,
-    Cranks.SeedWork.Domain.Generator.Analyzers.SmartEnumAnalyzerCodeFixProvider>;
+using Verify = Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.CSharpCodeFixVerifier<
+    Cranks.SeedWork.Domain.Analyzers.Analyzers.SmartEnumAnalyzer,
+    Cranks.SeedWork.Domain.Analyzers.Analyzers.SmartEnumAnalyzerCodeFixProvider>;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Analyzers;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Analyzers;
 
 public class SmartEnumAnalyzerTest
 {
