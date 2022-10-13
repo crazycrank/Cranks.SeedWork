@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Verifiers.Base;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.Base;
 
 /// <summary>
 ///     A default verifier for incremental source generators.

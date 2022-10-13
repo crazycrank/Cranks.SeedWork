@@ -1,11 +1,13 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Cranks.SeedWork.Domain.Attributes;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Verifiers;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Verifiers;
 
 #pragma warning disable CA1000 // Do not declare static members on generic types
 public static class CSharpCodeFixVerifier<TAnalyzer, TCodeFix>

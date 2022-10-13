@@ -3,7 +3,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Verifiers;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Verifiers;
 
 internal static class CSharpVerifierHelper
 {

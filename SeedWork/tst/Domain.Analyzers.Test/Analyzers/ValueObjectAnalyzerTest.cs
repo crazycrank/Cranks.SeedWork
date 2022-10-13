@@ -1,10 +1,10 @@
-﻿using Cranks.SeedWork.Domain.Generator.Analyzers;
+﻿using Cranks.SeedWork.Domain.Analyzers.Analyzers;
 
-using Verify = Cranks.SeedWork.Domain.Generator.Tests.Verifiers.CSharpCodeFixVerifier<
-    Cranks.SeedWork.Domain.Generator.Analyzers.ValueObjectAnalyzer,
-    Cranks.SeedWork.Domain.Generator.Analyzers.ValueObjectAnalyzerCodeFixProvider>;
+using Verify = Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.CSharpCodeFixVerifier<
+    Cranks.SeedWork.Domain.Analyzers.Analyzers.ValueObjectAnalyzer,
+    Cranks.SeedWork.Domain.Analyzers.Analyzers.ValueObjectAnalyzerCodeFixProvider>;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Analyzers;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Analyzers;
 
 public class ValueObjectAnalyzerTest
 {

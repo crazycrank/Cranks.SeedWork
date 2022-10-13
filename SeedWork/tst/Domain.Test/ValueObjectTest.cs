@@ -1,6 +1,8 @@
-﻿using Shouldly;
+﻿using Cranks.SeedWork.Domain.Attributes;
 
-namespace Cranks.SeedWork.Domain.Tests;
+using Shouldly;
+
+namespace Cranks.SeedWork.Domain.Test;
 
 [ValueObject]
 public partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
@@ -101,16 +103,16 @@ public class ValueObjectTest : UnitTestBase
 
         age1.ShouldBeLessThan(age2);
         age1.ShouldBeLessThanOrEqualTo(age2);
-        (age1 < age2).ShouldBeTrue();
-        (age1 <= age2).ShouldBeTrue();
-        (age1 > age2).ShouldBeFalse();
-        (age1 >= age2).ShouldBeFalse();
+        ShouldBeBooleanExtensions.ShouldBeTrue(age1 < age2);
+        ShouldBeBooleanExtensions.ShouldBeTrue(age1 <= age2);
+        ShouldBeBooleanExtensions.ShouldBeFalse(age1 > age2);
+        ShouldBeBooleanExtensions.ShouldBeFalse(age1 >= age2);
 
         age2.ShouldBeGreaterThan(age1);
         age2.ShouldBeGreaterThanOrEqualTo(age1);
-        (age2 < age1).ShouldBeFalse();
-        (age2 <= age1).ShouldBeFalse();
-        (age2 > age1).ShouldBeTrue();
-        (age2 >= age1).ShouldBeTrue();
+        ShouldBeBooleanExtensions.ShouldBeFalse(age2 < age1);
+        ShouldBeBooleanExtensions.ShouldBeFalse(age2 <= age1);
+        ShouldBeBooleanExtensions.ShouldBeTrue(age2 > age1);
+        ShouldBeBooleanExtensions.ShouldBeTrue(age2 >= age1);
     }
 }

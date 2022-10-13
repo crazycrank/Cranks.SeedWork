@@ -1,10 +1,12 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Cranks.SeedWork.Domain.Attributes;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 
-namespace Cranks.SeedWork.Domain.Generator.Tests.Verifiers;
+namespace Cranks.SeedWork.Domain.Analyzers.Test.Verifiers;
 
 public static class CSharpAnalyzerVerifier<TAnalyzer>
     where TAnalyzer : DiagnosticAnalyzer, new()

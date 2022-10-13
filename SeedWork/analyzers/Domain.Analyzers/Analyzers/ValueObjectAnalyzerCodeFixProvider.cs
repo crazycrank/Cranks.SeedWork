@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Cranks.SeedWork.Domain.Generator.Analyzers;
+namespace Cranks.SeedWork.Domain.Analyzers.Analyzers;
 
 [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ValueObjectAnalyzerCodeFixProvider))]
 [Shared]

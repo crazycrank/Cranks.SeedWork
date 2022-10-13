@@ -1,13 +1,13 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
 
-using Cranks.SeedWork.Domain.Generator.Extensions;
+using Cranks.SeedWork.Domain.Analyzers.Extensions;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.DotnetRuntime.Extensions;
 
-namespace Cranks.SeedWork.Domain.Generator.Generators;
+namespace Cranks.SeedWork.Domain.Analyzers.Generators;
 
 [Generator(LanguageNames.CSharp)]
 public class SmartEnumSourceGenerator : IIncrementalGenerator
