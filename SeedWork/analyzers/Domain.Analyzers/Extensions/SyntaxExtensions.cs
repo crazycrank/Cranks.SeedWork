@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Cranks.SeedWork.Domain.Generator.Extensions;
+namespace Cranks.SeedWork.Domain.Analyzers.Extensions;
 
 internal static class SyntaxExtensions
 {

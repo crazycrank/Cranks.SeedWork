@@ -1,12 +1,12 @@
 ﻿using System.Collections.Immutable;
 
-using Cranks.SeedWork.Domain.Generator.Extensions;
+using Cranks.SeedWork.Domain.Analyzers.Extensions;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace Cranks.SeedWork.Domain.Generator.Analyzers;
+namespace Cranks.SeedWork.Domain.Analyzers.Analyzers;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class ValueObjectAnalyzer : DiagnosticAnalyzer

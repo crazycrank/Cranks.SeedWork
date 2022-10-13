@@ -1,6 +1,6 @@
 ﻿using Bogus;
 
-namespace Cranks.SeedWork.Domain.Tests;
+namespace Cranks.SeedWork.Domain.Test;
 
 public class UnitTestBase
 {

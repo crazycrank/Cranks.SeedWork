@@ -4,7 +4,7 @@
 
 using Microsoft.CodeAnalysis;
 
-namespace Cranks.SeedWork.Domain.Generator.Analyzers;
+namespace Cranks.SeedWork.Domain.Analyzers.Analyzers;
 
 internal static partial class Rules
 {
