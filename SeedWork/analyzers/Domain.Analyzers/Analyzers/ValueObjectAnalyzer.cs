@@ -11,13 +11,11 @@ namespace Cranks.SeedWork.Domain.Analyzers.Analyzers;
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class ValueObjectAnalyzer : DiagnosticAnalyzer
 {
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
-        => ImmutableArray.Create(Rules.ValueObject_MustBePartial,
-                                 Rules.ValueObject_MustBeRecord,
-                                 Rules.ValueObject_MustNotHavePartialImplementation,
-                                 Rules.ValueObject_MustDeriveFromValueObject,
-                                 Rules.ValueObject_MustNotDeriveFromNonGenericValueObject,
-                                 Rules.ValueObject_ShouldNotBeNested);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rules.ValueObject_MustBePartial,
+                                                                                                       Rules.ValueObject_MustBeRecord,
+                                                                                                       Rules.ValueObject_MustNotHavePartialImplementation,
+                                                                                                       Rules.ValueObject_MustDeriveFromValueObject,
+                                                                                                       Rules.ValueObject_ShouldNotBeNested);
 
     public override void Initialize(AnalysisContext context)
     {
@@ -81,23 +79,12 @@ public class ValueObjectAnalyzer : DiagnosticAnalyzer
             context.ReportDiagnostic(diagnostic);
         }
 
-        // record should derive from ValueObject<T>
+        // record should derive from ValueObject
         if (type.BaseType!.SpecialType == SpecialType.System_Object
-            || (!type.BaseType.IsValueObjectGenericBaseClass() && !type.BaseType.IsValueObjectBaseClass()))
+            || !type.BaseType.IsValueObjectBaseClass())
         {
             // For all such symbols, produce a diagnostic.
             var diagnostic = Diagnostic.Create(Rules.ValueObject_MustDeriveFromValueObject,
-                                               rds.Identifier.GetLocation(),
-                                               type.Name);
-
-            context.ReportDiagnostic(diagnostic);
-        }
-
-        // record should not derive from non generic base class
-        if (type.BaseType.IsValueObjectBaseClass())
-        {
-            // For all such symbols, produce a diagnostic.
-            var diagnostic = Diagnostic.Create(Rules.ValueObject_MustNotDeriveFromNonGenericValueObject,
                                                rds.Identifier.GetLocation(),
                                                type.Name);
 

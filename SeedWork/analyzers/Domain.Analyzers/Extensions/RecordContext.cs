@@ -8,10 +8,13 @@ internal class RecordContext : IDisposable
 {
     private readonly StringBuilder _code;
 
-    public RecordContext(StringBuilder code, string recordName, params ITypeSymbol[] baseTypes)
+    public RecordContext(StringBuilder code,
+                         string recordName,
+                         string typeParameterList,
+                         params ITypeSymbol[] baseTypes)
     {
         _code = code;
-        _code.AppendLine($"partial record {recordName}");
+        _code.AppendLine($"partial record {recordName}{typeParameterList}");
 
         for (var i = 0; i < baseTypes.Length; i++)
         {

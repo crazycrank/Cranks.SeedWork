@@ -98,6 +98,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
                           Namespace = context.TargetSymbol.ContainingNamespace.ToString(),
                           EnumInstances = enumInstances,
                           KeyType = baseType.TypeArguments.Single().GetFullName(),
+                          TypeParameterList = (context.TargetNode as RecordDeclarationSyntax)?.TypeParameterList?.ToString() ?? string.Empty,
                       };
 
         return details;
@@ -110,7 +111,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
             .AppendUsings()
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
-        using (new RecordContext(code, details.Name))
+        using (new RecordContext(code, details.Name, details.TypeParameterList))
         {
             GenerateCastOperators();
         }
@@ -137,7 +138,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
             .AppendUsings()
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
-        using (new RecordContext(code, details.Name))
+        using (new RecordContext(code, details.Name, details.TypeParameterList))
         {
             GenerateEqualityMembers();
         }
@@ -158,7 +159,7 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
             .AppendUsings("System.Diagnostics.CodeAnalysis")
             .AppendNamespace(details.IsGlobalNamespace, details.Namespace);
 
-        using (new RecordContext(code, details.Name))
+        using (new RecordContext(code, details.Name, details.TypeParameterList))
         {
             GenerateValuesMembers();
         }
@@ -216,5 +217,9 @@ public class SmartEnumSourceGenerator : IIncrementalGenerator
         public ImmutableList<string> EnumInstances { get; init; } = ImmutableList<string>.Empty;
 
         public string FullName => $"{(IsGlobalNamespace ? string.Empty : $"{Namespace}.")}{Name}";
+
+        public string TypeParameterList { get; init; } = string.Empty;
+
+        public bool IsGenericTypeDefinition => !string.IsNullOrEmpty(TypeParameterList);
     }
 }

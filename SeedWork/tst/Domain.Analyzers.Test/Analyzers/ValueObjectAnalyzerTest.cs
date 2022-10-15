@@ -23,7 +23,7 @@ public class ValueObjectAnalyzerTest
     using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial record TestValueObject(int Value) : ValueObject<TestValueObject>;
+    public partial record TestValueObject(int Value) : ValueObject;
 ";
 
         await Verify.VerifyAnalyzerAsync(test);
@@ -36,14 +36,14 @@ public class ValueObjectAnalyzerTest
     using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
+    public record {|#0:TestValueObject|}(int Value) : ValueObject;
 ";
 
         var testCodeExpected = @"
     using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
+    public partial record {|#0:TestValueObject|}(int Value) : ValueObject;
 ";
 
         var expected = Verify.Diagnostic(Rules.ValueObject_MustBePartial).WithLocation(0).WithArguments("TestValueObject");
@@ -90,20 +90,6 @@ public class ValueObjectAnalyzerTest
     }
 
     [Fact]
-    public async Task NonGenericBaseClass_ReportsDiagnostic()
-    {
-        var testCode = @"
-    using Cranks.SeedWork.Domain;
-
-    [ValueObject]
-    public partial record {|#0:TestValueObject|}(int Value) : ValueObject;
-";
-
-        var expected = Verify.Diagnostic(Rules.ValueObject_MustNotDeriveFromNonGenericValueObject.Id).WithLocation(0).WithArguments("TestValueObject");
-        await Verify.VerifyAnalyzerAsync(testCode, expected);
-    }
-
-    [Fact]
     public async Task WrongBaseClass__ReportsDiagnostic()
     {
         var testCode = @"
@@ -142,7 +128,7 @@ public class ValueObjectAnalyzerTest
     using Cranks.SeedWork.Domain;
 
     [ValueObject]
-    public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
+    public partial record {|#0:TestValueObject|}(int Value) : ValueObject;
     public partial record TestValueObject;
 ";
 
@@ -158,7 +144,7 @@ public class ValueObjectAnalyzerTest
 
     public class Parent {
         [ValueObject]
-        public partial record {|#0:TestValueObject|}(int Value) : ValueObject<TestValueObject>;
+        public partial record {|#0:TestValueObject|}(int Value) : ValueObject;
     }
 ";
 

@@ -28,56 +28,34 @@ internal static class SymbolExtensions
 
     public static bool IsValueObjectGenericBaseClass(this ISymbol type)
     {
-        return type is INamedTypeSymbol
-                       {
-                           Name: "ValueObject",
-                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
-                           ContainingNamespace.Name: "Domain",
-                           IsGenericType: true,
-                       };
+        return type is INamedTypeSymbol { Name: "ValueObject", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: true };
     }
 
     public static bool IsValueObjectBaseClass(this ISymbol type)
     {
-        return type is INamedTypeSymbol
-                       {
-                           Name: "ValueObject",
-                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
-                           ContainingNamespace.Name: "Domain",
-                           IsGenericType: false,
-                       };
+        return type is INamedTypeSymbol { Name: "ValueObject", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: false };
     }
 
     public static bool IsSmartEnumGenericBaseClass(this ISymbol type)
     {
-        return type is INamedTypeSymbol
-                       {
-                           Name: "SmartEnum",
-                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
-                           ContainingNamespace.Name: "Domain",
-                           IsGenericType: true,
-                       };
+        return type is INamedTypeSymbol { Name: "SmartEnum", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: true };
     }
 
     public static bool IsSmartEnumBaseClass(this ISymbol type)
     {
-        return type is INamedTypeSymbol
-                       {
-                           Name: "SmartEnum",
-                           ContainingAssembly.Name: "Cranks.SeedWork.Domain",
-                           ContainingNamespace.Name: "Domain",
-                           IsGenericType: false,
-                       };
+        return type is INamedTypeSymbol { Name: "SmartEnum", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: false };
     }
 
     public static string GetFullName(this ITypeSymbol type)
     {
         var typeName = type switch
                        {
-                           INamedTypeSymbol { IsGenericType: true } ntp => $"{ntp.Name}<{string.Join("', ", ntp.TypeArguments.Select(p => p.Name))}>",
+                           INamedTypeSymbol { IsGenericType: true } ntp => $"{ntp.Name}<{string.Join("', ", ntp.TypeArguments.Select(p => p.GetFullName()))}>",
                            ITypeSymbol => type.Name,
                        };
 
-        return $"{type.ContainingNamespace}.{typeName}";
+        var prependNamespace = type is not ITypeParameterSymbol;
+
+        return prependNamespace ? $"{type.ContainingNamespace}.{typeName}" : typeName;
     }
 }
