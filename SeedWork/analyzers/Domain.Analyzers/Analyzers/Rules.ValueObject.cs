@@ -26,8 +26,8 @@ internal static partial class Rules
 
     public static readonly DiagnosticDescriptor ValueObject_MustDeriveFromValueObject
         = new("SEED0003",
-              "ValueObject must derive from ValueObject<T>",
-              "The value object '{0}' does not inherit from ValueObject<T>. Value objects must derive from ValueObject<>.",
+              "ValueObject must derive from ValueObject",
+              "The value object '{0}' does not inherit from ValueObject. Value objects must derive from ValueObject.",
               Categories.Domain,
               DiagnosticSeverity.Error,
               true);
@@ -44,14 +44,6 @@ internal static partial class Rules
         = new("SEED0005",
               "ValueObject must not be a nested class",
               "The value object '{0}' is nested inside another class. This is not supported",
-              Categories.Domain,
-              DiagnosticSeverity.Error,
-              true);
-
-    public static readonly DiagnosticDescriptor ValueObject_MustNotDeriveFromNonGenericValueObject
-        = new("SEED0006",
-              "Do not derive from non-generic ValueObject",
-              "The value object '{0}' derives from the non-generic ValueObject base class, which is non intended to be derived from directly",
               Categories.Domain,
               DiagnosticSeverity.Error,
               true);

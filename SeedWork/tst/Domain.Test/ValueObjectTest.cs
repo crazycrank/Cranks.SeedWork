@@ -3,10 +3,10 @@
 namespace Cranks.SeedWork.Domain.Test;
 
 [ValueObject]
-public partial record Address(string Street, string ZipCode, string City) : ValueObject<Address>;
+public partial record Address(string Street, string ZipCode, string City) : ValueObject;
 
 [ValueObject]
-public partial record Age(int Value) : ValueObject<Age>;
+public partial record Age(int Value) : ValueObject;
 
 public class ValueObjectTest : UnitTestBase
 {
@@ -90,7 +90,7 @@ public class ValueObjectTest : UnitTestBase
         var age = new Age(Faker.Random.Int());
 
         // assert
-        age.ShouldBeAssignableTo<ValueObject<Age>>();
+        age.ShouldBeAssignableTo<ValueObject>();
     }
 
     [Fact]
