@@ -1,7 +1,5 @@
 ﻿using System.Collections.Immutable;
-
 using Cranks.SeedWork.Domain.Analyzers.Extensions;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -91,22 +89,10 @@ public class SmartEnumAnalyzer : DiagnosticAnalyzer
         }
 
         // record should derive from SmartEnum<T>
-        if (type.BaseType!.SpecialType == SpecialType.System_Object
-            || (!type.BaseType.IsSmartEnumGenericBaseClass() && !type.BaseType.IsSmartEnumBaseClass()))
+        if (!type.DerivesFromGenericSmartEnum())
         {
             // For all such symbols, produce a diagnostic.
             var diagnostic = Diagnostic.Create(Rules.SmartEnum_MustDeriveFromSmartEnum,
-                                               rds.Identifier.GetLocation(),
-                                               type.Name);
-
-            context.ReportDiagnostic(diagnostic);
-        }
-
-        // record should not derive from non generic base class
-        if (type.BaseType.IsSmartEnumBaseClass())
-        {
-            // For all such symbols, produce a diagnostic.
-            var diagnostic = Diagnostic.Create(Rules.SmartEnum_MustNotDeriveFromNonGenericSmartEnum,
                                                rds.Identifier.GetLocation(),
                                                type.Name);
 

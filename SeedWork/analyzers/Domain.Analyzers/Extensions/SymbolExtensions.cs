@@ -26,24 +26,40 @@ internal static class SymbolExtensions
                              });
     }
 
-    public static bool IsValueObjectGenericBaseClass(this ISymbol type)
+    public static bool DerivesFrom(this ITypeSymbol type, Predicate<INamedTypeSymbol> predicate, bool allowIndirectInheritance = true)
     {
-        return type is INamedTypeSymbol { Name: "ValueObject", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: true };
+        if (type.BaseType is null || type.BaseType.SpecialType is SpecialType.System_Object)
+        {
+            return false;
+        }
+
+        if (predicate(type.BaseType))
+        {
+            return true;
+        }
+
+        return allowIndirectInheritance && DerivesFrom(type.BaseType, predicate);
     }
 
-    public static bool IsValueObjectBaseClass(this ISymbol type)
+    public static bool DerivesFrom(this ISymbol type, Predicate<INamedTypeSymbol> predicate, bool allowIndirectInheritance = true)
     {
-        return type is INamedTypeSymbol { Name: "ValueObject", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: false };
+        if (type is not INamedTypeSymbol typeSymbol)
+        {
+            return false;
+        }
+
+        return DerivesFrom(typeSymbol, predicate, allowIndirectInheritance);
     }
 
-    public static bool IsSmartEnumGenericBaseClass(this ISymbol type)
+    public static bool DerivesFromValueObject(this ISymbol type)
     {
-        return type is INamedTypeSymbol { Name: "SmartEnum", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: true };
+        return type.DerivesFrom(ts => ts is { Name: "ValueObject", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain" });
     }
 
-    public static bool IsSmartEnumBaseClass(this ISymbol type)
+    public static bool DerivesFromGenericSmartEnum(this ISymbol type)
     {
-        return type is INamedTypeSymbol { Name: "SmartEnum", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: false };
+        return type.DerivesFrom(ts => ts is { Name: "SmartEnum", ContainingAssembly.Name: "Cranks.SeedWork.Domain", ContainingNamespace.Name: "Domain", IsGenericType: true },
+                                false);
     }
 
     public static string GetFullName(this ITypeSymbol type)

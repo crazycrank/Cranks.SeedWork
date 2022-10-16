@@ -1,5 +1,4 @@
 ﻿using Cranks.SeedWork.Domain.Analyzers.Analyzers;
-
 using Verify = Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.CSharpCodeFixVerifier<
     Cranks.SeedWork.Domain.Analyzers.Analyzers.SmartEnumAnalyzer,
     Cranks.SeedWork.Domain.Analyzers.Analyzers.SmartEnumAnalyzerCodeFixProvider>;
@@ -72,7 +71,10 @@ public class SmartEnumAnalyzerTest
 ";
 
         var expected = Verify.Diagnostic(Rules.SmartEnum_MustBeRecord.Id).WithLocation(0).WithArguments("TestSmartEnum");
-        await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, Rules.SmartEnum_MustDeriveFromSmartEnum.Id, expected);
+        await Verify.VerifyCodeFixAsync(testCode,
+                                        testCodeExpected,
+                                        Rules.SmartEnum_MustDeriveFromSmartEnum.Id,
+                                        expected);
     }
 
     [Fact]
@@ -99,7 +101,7 @@ public class SmartEnumAnalyzerTest
     public sealed partial record {|#0:TestSmartEnum|}(int Key) : SmartEnum;
 ";
 
-        var expected = Verify.Diagnostic(Rules.SmartEnum_MustNotDeriveFromNonGenericSmartEnum.Id).WithLocation(0).WithArguments("TestSmartEnum");
+        var expected = Verify.Diagnostic(Rules.SmartEnum_MustDeriveFromSmartEnum.Id).WithLocation(0).WithArguments("TestSmartEnum");
         await Verify.VerifyAnalyzerAsync(testCode, expected);
     }
 
