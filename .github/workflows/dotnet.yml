@@ -105,7 +105,7 @@ jobs:
         --source https://api.nuget.org/v3/index.json
 
     - name: Tag commit with version
-      if: contains(env.GitVersion_BranchName, 'master') || contains(env.GitVersion_BranchName, 'develop')
+      if: contains(env.GitVersion_BranchName, 'master')
       run: |
         git tag v${{ env.GitVersion_SemVer }}
         git push --tag
