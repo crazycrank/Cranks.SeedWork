@@ -1,5 +1,4 @@
 ﻿using Cranks.SeedWork.Domain.Analyzers.Analyzers;
-
 using Verify = Cranks.SeedWork.Domain.Analyzers.Test.Verifiers.CSharpCodeFixVerifier<
     Cranks.SeedWork.Domain.Analyzers.Analyzers.ValueObjectAnalyzer,
     Cranks.SeedWork.Domain.Analyzers.Analyzers.ValueObjectAnalyzerCodeFixProvider>;
@@ -72,7 +71,10 @@ public class ValueObjectAnalyzerTest
 ";
 
         var expected = Verify.Diagnostic(Rules.ValueObject_MustBeRecord.Id).WithLocation(0).WithArguments("TestValueObject");
-        await Verify.VerifyCodeFixAsync(testCode, testCodeExpected, Rules.ValueObject_MustDeriveFromValueObject.Id, expected);
+        await Verify.VerifyCodeFixAsync(testCode,
+                                        testCodeExpected,
+                                        Rules.ValueObject_MustDeriveFromValueObject.Id,
+                                        expected);
     }
 
     [Fact]
@@ -150,5 +152,21 @@ public class ValueObjectAnalyzerTest
 
         var expected = Verify.Diagnostic(Rules.ValueObject_ShouldNotBeNested.Id).WithLocation(0).WithArguments("TestValueObject");
         await Verify.VerifyAnalyzerAsync(testCode, expected);
+    }
+
+    [Fact]
+    public async Task InheritedValueObjects_ReportsNoDiagnostic()
+    {
+        var testCode = @"
+    using Cranks.SeedWork.Domain;
+
+    [ValueObject]
+    public partial record TestValueObject(int Value) : ValueObject;
+
+    [ValueObject]
+    public partial record InheritedValueObject(int Value) : TestValueObject(Value);
+";
+
+        await Verify.VerifyAnalyzerAsync(testCode);
     }
 }
